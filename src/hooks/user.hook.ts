@@ -1,8 +1,8 @@
 import jwtDecode from "jwt-decode";
 import { appStorage } from "@/lib";
-import { UserRole } from "types";
+import { UserRole } from "@/types";
 
-type DecodedToken = {
+export type DecodedToken = {
   id: string;
   email: string;
   role: UserRole;

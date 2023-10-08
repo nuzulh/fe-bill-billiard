@@ -10,4 +10,5 @@ export const appStorage = {
     key: AppStorageKeys,
     value: AppStorage
   ) => localStorage.setItem(key, value[key]),
+  remove: (key: AppStorageKeys) => localStorage.removeItem(key),
 };

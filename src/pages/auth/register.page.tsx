@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthLayout, Spinner } from "../../components";
+import { Spinner } from "../../components";
 import React from "react";
 import { RegisterSchema } from "@/lib";
 import { useToast } from "@/components/ui/use-toast";
@@ -37,87 +37,86 @@ export default function RegisterPage() {
     toast({
       title: `Daftar ${result.error ? "gagal" : "berhasil"}`,
       description: result.message ?? "Silahkan login",
+      variant: result.error ? "destructive" : "default",
     });
     if (!result.error) navigate("/auth/login");
   }
 
   return (
-    <AuthLayout>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Andrian" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="mail@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Masukkan password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Konfirmasi password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Masukkan konfirmasi password"
-                      type="password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <Button disabled={loading} className="w-full mt-6" type="submit">
-            {loading ? <Spinner /> : "Daftar"}
-          </Button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-2">
-          sudah punya akun?{" "}
-          <Link className="text-blue-500 hover:underline" to="/auth/login">
-            Masuk
-          </Link>
-        </p>
-      </Form>
-    </AuthLayout>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="space-y-2">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nama</FormLabel>
+                <FormControl>
+                  <Input placeholder="Andrian" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="mail@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Masukkan password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Konfirmasi password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Masukkan konfirmasi password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button disabled={loading} className="w-full mt-6" type="submit">
+          {loading ? <Spinner /> : "Daftar"}
+        </Button>
+      </form>
+      <p className="text-center text-sm text-gray-600 mt-2">
+        sudah punya akun?{" "}
+        <Link className="text-blue-500 hover:underline" to="/auth/login">
+          Masuk
+        </Link>
+      </p>
+    </Form>
   );
 }

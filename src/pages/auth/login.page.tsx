@@ -6,7 +6,7 @@ import { Button } from "../../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthLayout, Spinner } from "../../components";
+import { Spinner } from "../../components";
 import { Services } from "@/services";
 import { useToast } from "@/components/ui/use-toast";
 import { LoginSchema, appStorage } from "@/lib";
@@ -35,6 +35,7 @@ export default function LoginPage() {
       toast({
         title: "Gagal login",
         description: result.message,
+        variant: "destructive",
       });
       return;
     }
@@ -43,52 +44,50 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLayout>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="mail@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Masukkan password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <Button disabled={loading} className="w-full mt-6" type="submit">
-            {loading ? <Spinner /> : "Masuk"}
-          </Button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-2">
-          tidak punya akun?{" "}
-          <Link className="text-blue-500 hover:underline" to="/auth/register">
-            Daftar
-          </Link>
-        </p>
-      </Form>
-    </AuthLayout>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="space-y-2">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="mail@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Masukkan password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button disabled={loading} className="w-full mt-6" type="submit">
+          {loading ? <Spinner /> : "Masuk"}
+        </Button>
+      </form>
+      <p className="text-center text-sm text-gray-600 mt-2">
+        tidak punya akun?{" "}
+        <Link className="text-blue-500 hover:underline" to="/auth/register">
+          Daftar
+        </Link>
+      </p>
+    </Form>
   );
 }
