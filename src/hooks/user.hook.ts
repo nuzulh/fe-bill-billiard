@@ -4,6 +4,7 @@ import { UserRole } from "@/types";
 
 export type DecodedToken = {
   id: string;
+  name: string;
   email: string;
   role: UserRole;
   iat: number;

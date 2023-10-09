@@ -12,23 +12,15 @@ export type ApiResponse<T> = {
 };
 
 export type User = {
-  created_at: string;
+  created_at: Date;
   id: string;
   name: string;
   email: string;
   role: UserRole;
 };
 
-export type Table = {
-  id: number;
-  name: string;
-  price: number;
-  device_id: string;
-  active: boolean;
-};
-
 export type Fnb = {
-  created_at: string;
+  created_at: Date;
   id: number;
   name: string;
   price: number;
@@ -40,19 +32,30 @@ export type Fnb = {
 
 export type OrderItem = {
   id: string;
-  fnb: string;
   quantity: number;
+  status: "pending" | "cooking" | "done";
+  fnb: Fnb;
 };
 
 export type Order = {
   id: string;
+  created_at: Date;
   costumer_name: string;
   paid: boolean;
   price: number;
   note?: string;
   created_by: string;
   table: string;
+  table_order?: Partial<Table>;
   duration: number;
   life_time: boolean;
-  order_items: OrderItem[];
+  order_items: Partial<OrderItem>[];
+};
+
+export type Table = {
+  id: number;
+  name: string;
+  price: number;
+  device_id: string;
+  order?: Order;
 };

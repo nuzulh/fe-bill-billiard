@@ -31,16 +31,15 @@ export default function LoginPage() {
       values.password
     );
     setLoading(false);
-    if (result.error) {
-      toast({
-        title: "Gagal login",
-        description: result.message,
-        variant: "destructive",
-      });
-      return;
+    if (result.error) toast({
+      title: "Gagal login",
+      description: result.message,
+      variant: "destructive",
+    });
+    else {
+      appStorage.set("token", { token: result.data.token });
+      navigate(`/${result.data.role}`, { replace: true });
     }
-    appStorage.set("token", { token: result.data.token });
-    navigate(`/${result.data.role}`, { replace: true });
   }
 
   return (

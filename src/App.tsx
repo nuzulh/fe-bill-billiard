@@ -3,8 +3,8 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuthUser } from "./hooks";
 import { appStorage } from "./lib";
 import { useToast } from "./components/ui/use-toast";
-import { AdminPages, AuthPages, CashierPages, ChefPages, UserPages } from "./pages";
 import { AppLayout } from "./components";
+import { AdminPages, AuthPages, CashierPages, ChefPages, UserPages } from "./pages";
 
 export default function App() {
   const authUser = useAuthUser();

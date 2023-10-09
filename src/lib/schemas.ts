@@ -22,3 +22,42 @@ export const RegisterSchema = z
     path: ["confirmPassword"],
     message: "Password tidak cocok",
   });
+
+export const FillTableSchema = z.object({
+  table_order: z.object({
+    id: z.number(),
+    duration: z.number(),
+  }),
+  costumer_name: z
+    .string()
+    .min(1, "Nama harus diisi")
+    .max(100, "Nama maksimal 100 karakter"),
+  life_time: z.boolean(),
+  total_price: z.number(),
+  order_items: z
+    .array(
+      z.object({
+        id: z.number(),
+        name: z.string(),
+        price: z.number(),
+        total_price: z.number(),
+        quantity: z
+          .number({
+            errorMap: () => ({
+              message: `Qty harus diisi`,
+            }),
+          })
+          .min(1, "Qty harus diisi"),
+      })
+    )
+    .refine(
+      (items) =>
+        items.find(
+          (item) => items.filter((i) => i.name === item.name).length > 1
+        ) === undefined,
+      {
+        message: "Gunakan qty untuk item yang sama",
+        path: [0, "name"],
+      }
+    ),
+});

@@ -13,7 +13,7 @@ export function applyAuthHeader(
   const storageToken = appStorage.get("token");
   return {
     ...headers,
-    Authorization: token ?? storageToken,
+    Authorization: `Bearer ${token ?? storageToken}`,
   };
 }
 

@@ -15,9 +15,7 @@ type AppLayoutProps = {
   authUser: DecodedToken | null;
 };
 
-export function AppLayout({
-  authUser,
-}: AppLayoutProps) {
+export function AppLayout({ authUser }: AppLayoutProps) {
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -50,7 +48,7 @@ export function AppLayout({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="default" className="flex justify-center gap-3">
-                    <p>{authUser.email?.split("@")[0]}</p>
+                    <p>{authUser.name ?? authUser.email.split("@")[0]}</p>
                     <ChevronDown />
                   </Button>
                 </DropdownMenuTrigger>
