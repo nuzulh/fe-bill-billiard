@@ -1,4 +1,4 @@
-import { Spinner } from "@/components";
+import { DialogContainer, Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -49,7 +49,7 @@ export default function AddDurationDialog(
   }
 
   return (
-    <div className="hover:cursor-pointer hover:bg-secondary hover:text-primary items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+    <DialogContainer>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div className="flex gap-1 items-center">
@@ -113,6 +113,6 @@ export default function AddDurationDialog(
           </Form>
         </DialogContent>
       </Dialog>
-    </div>
+    </DialogContainer>
   );
 }

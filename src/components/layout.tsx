@@ -71,7 +71,7 @@ export function AppLayout({ authUser }: AppLayoutProps) {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="hover:cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => navigate("/admin/fnb")}
                       >
                         <UtensilsCrossed className="mr-2 h-4 w-4" />
                         <span>Data F&B</span>

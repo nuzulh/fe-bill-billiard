@@ -1,4 +1,4 @@
-import { CashierCards, Spinner } from "@/components";
+import { CashierCards, CashierDialogs, Spinner } from "@/components";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Fnb } from "@/types";
@@ -22,10 +22,13 @@ export default function FnbTab() {
   if (!fnbs) return <Spinner />;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-      {fnbs.map((fnb) => (
-        <CashierCards.FnbCard key={fnb.id} fnb={fnb} />
-      ))}
-    </div>
+    <section className="flex flex-col gap-4 items-start">
+      <CashierDialogs.OrderFnbDialog fnbs={fnbs} />
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+        {fnbs.map((fnb) => (
+          <CashierCards.FnbCard key={fnb.id} fnb={fnb} />
+        ))}
+      </div>
+    </section>
   );
 }

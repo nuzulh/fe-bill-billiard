@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Fnb, Table } from "@/types";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components";
+import { DialogContainer, Spinner } from "@/components";
 import { cn } from "@/lib";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -65,7 +65,7 @@ export default function FillTableDialog({
   }
 
   return (
-    <div className="hover:cursor-pointer hover:bg-secondary hover:text-primary items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+    <DialogContainer>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div className="flex gap-1 items-center">
@@ -319,6 +319,6 @@ export default function FillTableDialog({
           </Form>
         </DialogContent>
       </Dialog>
-    </div>
+    </DialogContainer>
   );
 }

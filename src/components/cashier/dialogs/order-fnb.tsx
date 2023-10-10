@@ -1,59 +1,37 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Check, ChevronsUpDown, Salad, Trash } from "lucide-react";
+import { Check, Salad, Trash } from "lucide-react";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as z from "zod";
-import { EditFnbSchema } from "@/lib/schemas";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Fnb, Table } from "@/types";
+import { Fnb } from "@/types";
 import { Button } from "@/components/ui/button";
 import { DialogContainer, Spinner } from "@/components";
-import { cn } from "@/lib";
+import { OrderFnbSchema, cn } from "@/lib";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
-type EditFnbDialogProps = {
-  table: Table,
+type OrderFnbDialogProps = {
   fnbs: Fnb[],
 };
 
-export default function EditFnbDialog({
-  table,
-  fnbs,
-}: EditFnbDialogProps) {
+export default function OrderFnbDialog(
+  { fnbs }: OrderFnbDialogProps
+) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const form = useForm<z.infer<typeof EditFnbSchema>>({
-    resolver: zodResolver(EditFnbSchema),
+  const form = useForm<z.infer<typeof OrderFnbSchema>>({
+    resolver: zodResolver(OrderFnbSchema),
     defaultValues: {
-      costumer_name: table.order?.costumer_name,
-      table_order: {
-        id: table.id,
-        duration: table.order?.duration,
-      },
-      order_items: table.order?.order_items.map(
-        (x) => ({
-          // ...x,
-          fnb_id: fnbs.find((f) => f.name === x.fnb?.name)?.id,
-          name: x.fnb?.name,
-          price: x.fnb?.price,
-          total_price: table.order?.order_items.reduce(
-            (a, b) => a + b.fnb?.price! || 0,
-            0
-          ),
-          quantity: x.quantity,
-        })
-      ),
-      total_price: table.order?.price,
-      life_time: table.order?.life_time,
+      costumer_name: "",
+      order_items: [],
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -61,36 +39,42 @@ export default function EditFnbDialog({
     name: "order_items",
   });
   const orderItems = form.watch("order_items");
-  const duration = form.watch("table_order.duration");
-  const lifeTime = form.watch("life_time");
 
-  async function onSubmit(val: z.infer<typeof EditFnbSchema>) {
-    setLoading(true);
-    const result = await Services.tableService.editFnb(
-      table.id,
-      val.order_items,
+  function onSelectFnb(fnb: Fnb, index: number) {
+    form.clearErrors(`order_items.${index}.name`);
+    form.setValue(`order_items.${index}.id`, fnb.id);
+    form.setValue(`order_items.${index}.name`, fnb.name);
+    form.setValue(`order_items.${index}.price`, fnb.price);
+    form.setValue(
+      `order_items.${index}.total_price`,
+      fnb.price * form.getValues(`order_items.${index}.quantity`)
     );
+  }
+
+  async function onSubmit(val: z.infer<typeof OrderFnbSchema>) {
+    setLoading(true);
+    const result = await Services.orderService.create(val as any);
     setLoading(false);
-    if (result.error) toast({
-      title: "Gagal",
-      description: result.message,
-      variant: "destructive",
+    toast({
+      title: result.error ? "Gagal" : "Berhasil",
+      description: result.message ?? "Order berhasil dibuat",
+      variant: result.error ? "destructive" : "default",
     });
-    else navigate(0);
+    if (!result.error) navigate(0);
   }
 
   return (
     <DialogContainer>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <div className="flex gap-1 items-center">
+          <Button className="flex gap-1 items-center">
             <Salad className="mr-2 h-4 w-4" />
-            <span>Tambah F&B</span>
-          </div>
+            <span>Order F&B</span>
+          </Button>
         </DialogTrigger>
         <DialogContent className="max-w-[400px] sm:max-w-[425px] max-h-[80vh] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
-            <DialogTitle>Tambah F&B</DialogTitle>
+            <DialogTitle>Order F&B</DialogTitle>
             <DialogDescription>
               Pastikan data yang diisi sudah benar
             </DialogDescription>
@@ -105,69 +89,12 @@ export default function EditFnbDialog({
                     <FormItem>
                       <FormLabel>Nama Kostumer</FormLabel>
                       <FormControl>
-                        <Input placeholder="Masukkan nama kostumer" {...field} disabled />
+                        <Input placeholder="Masukkan nama kostumer" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <FormLabel>Durasi (/jam)</FormLabel>
-                <FormField
-                  control={form.control}
-                  name="life_time"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          disabled
-                          checked={field.value}
-                          onCheckedChange={(val) => {
-                            form.setValue(
-                              "table_order.duration",
-                              val ? -1 : 0
-                            );
-                            field.onChange(val);
-                          }}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Sepuasnya
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                {lifeTime ? null : (
-                  <FormField
-                    control={form.control}
-                    name="table_order.duration"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input
-                            disabled
-                            placeholder="Masukkan durasi"
-                            type="number"
-                            {...field}
-                            {...form.register("table_order.duration", {
-                              setValueAs: (value) => Number(value) || "",
-                              onChange(event) {
-                                form.setValue(
-                                  "total_price",
-                                  event.target.value > 0
-                                    ? event.target.value * table.price
-                                    : 0
-                                );
-                              },
-                            })}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
                 {fields.map((field, index) => (
                   <div key={field.id} className="flex items-end w-full gap-2">
                     <div>
@@ -189,52 +116,21 @@ export default function EditFnbDialog({
                                     className={cn(
                                       "w-[200px] justify-between",
                                       !field.value && "text-muted-foreground"
-                                    )}
-                                  >
-                                    {field.value
-                                      ? fnbs.find(
-                                        (fnb) => fnb.name === field.value
-                                      )?.name
-                                      : table.order?.order_items.find(
-                                        (x) => x.fnb?.name === field.value
-                                      )?.fnb?.name || "Pilih F&B"}
-                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    )}                                      >
+                                    {field.value || "Pilih F&B"}
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
                               <PopoverContent className="w-[200px] p-0">
                                 <Command>
-                                  <CommandInput placeholder="Cari f&b..." />
-                                  <CommandEmpty>Tidak ada F&B.</CommandEmpty>
+                                  <CommandInput placeholder="Cari F&B..." />
+                                  <CommandEmpty>Tidak ada F&B</CommandEmpty>
                                   <CommandGroup>
                                     {fnbs.map((fnb) => (
                                       <CommandItem
-                                        value={fnb.name}
                                         key={fnb.id}
-                                        onSelect={() => {
-                                          form.clearErrors(
-                                            `order_items.${index}.name`
-                                          );
-                                          form.setValue(
-                                            `order_items.${index}.fnb_id`,
-                                            fnb.id
-                                          );
-                                          form.setValue(
-                                            `order_items.${index}.name`,
-                                            fnb.name
-                                          );
-                                          form.setValue(
-                                            `order_items.${index}.price`,
-                                            fnb.price
-                                          );
-                                          const qty = form.getValues(
-                                            `order_items.${index}.quantity`
-                                          );
-                                          form.setValue(
-                                            `order_items.${index}.total_price`,
-                                            fnb.price * qty
-                                          );
-                                        }}
+                                        value={fnb.name}
+                                        onSelect={() => onSelectFnb(fnb, index)}
                                       >
                                         <Check
                                           className={cn(
@@ -308,7 +204,7 @@ export default function EditFnbDialog({
                   size="sm"
                   className="mt-10"
                   onClick={() => append({
-                    fnb_id: 0,
+                    id: 0,
                     name: "",
                     quantity: 1,
                     price: 0,
@@ -325,9 +221,7 @@ export default function EditFnbDialog({
                         style: "currency",
                         currency: "IDR",
                       }).format(
-                        orderItems.reduce((a, b) => a + b.price * b.quantity, 0) + table.price * (duration < 0 ? 0 : duration) ||
-                        table.order?.price ||
-                        0
+                        orderItems.reduce((a, b) => a + b.price * b.quantity, 0)
                       )}
                       disabled
                     />
@@ -336,7 +230,7 @@ export default function EditFnbDialog({
                 </FormItem>
               </div>
               <Button disabled={loading} className="w-full mt-6" type="submit">
-                {loading ? <Spinner /> : "Tambah F&B"}
+                {loading ? <Spinner /> : "Order F&B"}
               </Button>
             </form>
           </Form>

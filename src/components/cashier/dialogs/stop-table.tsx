@@ -1,4 +1,4 @@
-import { Spinner } from "@/components";
+import { DialogContainer, Spinner } from "@/components";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Table } from "@/types";
@@ -29,10 +29,7 @@ export default function StopTableDialog(
   }
 
   return (
-    <div
-      onClick={onStopTable}
-      className="hover:cursor-pointer hover:bg-secondary hover:text-primary items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-    >
+    <DialogContainer onClick={onStopTable}>
       <div className="flex gap-1 items-center">
         {loading ? <Spinner /> : (
           <>
@@ -41,6 +38,6 @@ export default function StopTableDialog(
           </>
         )}
       </div>
-    </div>
+    </DialogContainer>
   );
 }

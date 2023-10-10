@@ -6,6 +6,7 @@ import FillTableDialog from "./dialogs/fill-table";
 import EditFnbDialog from "./dialogs/edit-fnb";
 import StopTableDialog from "./dialogs/stop-table";
 import AddDurationDialog from "./dialogs/add-duration";
+import OrderFnbDialog from "./dialogs/order-fnb";
 
 export const CashierTabs = {
   BillingTab,
@@ -22,4 +23,5 @@ export const CashierDialogs = {
   EditFnbDialog,
   StopTableDialog,
   AddDurationDialog,
+  OrderFnbDialog,
 };
