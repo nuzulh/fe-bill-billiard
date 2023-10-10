@@ -4,16 +4,16 @@ import { Services } from "@/services";
 import { Table } from "@/types";
 import { TimerOff } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 type StopTableDialogProps = {
   table: Table;
+  nextAction: () => void;
 };
 
-export default function StopTableDialog(
-  { table }: StopTableDialogProps
-) {
-  const navigate = useNavigate();
+export default function StopTableDialog({
+  table,
+  nextAction,
+}: StopTableDialogProps) {
   const [loading, setLoading] = React.useState(false);
 
   async function onStopTable() {
@@ -25,7 +25,7 @@ export default function StopTableDialog(
       description: result.message ?? "Berhasil stop meja",
       variant: result.error ? "destructive" : "default",
     });
-    if (!result.error) navigate(0);
+    if (!result.error) nextAction();
   }
 
   return (

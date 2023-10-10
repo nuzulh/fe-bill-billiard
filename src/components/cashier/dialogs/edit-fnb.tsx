@@ -16,18 +16,18 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 type EditFnbDialogProps = {
   table: Table,
   fnbs: Fnb[],
+  nextAction: () => void;
 };
 
 export default function EditFnbDialog({
   table,
   fnbs,
+  nextAction,
 }: EditFnbDialogProps) {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -76,7 +76,10 @@ export default function EditFnbDialog({
       description: result.message,
       variant: "destructive",
     });
-    else navigate(0);
+    else {
+      setIsOpen(false);
+      nextAction();
+    }
   }
 
   return (

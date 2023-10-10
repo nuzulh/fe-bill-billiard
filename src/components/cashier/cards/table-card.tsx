@@ -9,15 +9,18 @@ import { Countdown } from "@/components";
 import { useCountdown } from "@/hooks";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 type TableCardProps = {
   table: Table;
   fnbs: Fnb[];
+  nextAction: () => void;
 };
 
-export default function TableCard({ table, fnbs }: TableCardProps) {
-  const navigate = useNavigate();
+export default function TableCard({
+  table,
+  fnbs,
+  nextAction,
+}: TableCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const {
     hours,
@@ -36,7 +39,10 @@ export default function TableCard({ table, fnbs }: TableCardProps) {
       description: result.message,
       variant: "destructive",
     });
-    else navigate(0);
+    else {
+      setIsOpen(false);
+      nextAction();
+    }
   }
 
   React.useEffect(() => {
@@ -74,16 +80,24 @@ export default function TableCard({ table, fnbs }: TableCardProps) {
                 <CashierDialogs.EditFnbDialog
                   table={table}
                   fnbs={fnbs}
+                  nextAction={nextAction}
                 />
                 {table.order?.life_time ? null : (
-                  <CashierDialogs.AddDurationDialog table={table} />
+                  <CashierDialogs.AddDurationDialog
+                    table={table}
+                    nextAction={nextAction}
+                  />
                 )}
-                <CashierDialogs.StopTableDialog table={table} />
+                <CashierDialogs.StopTableDialog
+                  table={table}
+                  nextAction={nextAction}
+                />
               </>
             ) : (
               <CashierDialogs.FillTableDialog
                 table={table}
                 fnbs={fnbs}
+                nextAction={nextAction}
               />
             )}
           </DropdownMenuContent>

@@ -17,16 +17,24 @@ export default function FnbTab() {
     else setFnbs(result.data);
   }
 
+  function nextAction() { fetchFnbs(); }
+
   React.useEffect(() => { fetchFnbs(); }, []);
 
   if (!fnbs) return <Spinner />;
 
   return (
     <section className="flex flex-col gap-4 items-start">
-      <CashierDialogs.OrderFnbDialog fnbs={fnbs} />
+      <CashierDialogs.OrderFnbDialog
+        fnbs={fnbs}
+        nextAction={nextAction}
+      />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
         {fnbs.map((fnb) => (
-          <CashierCards.FnbCard key={fnb.id} fnb={fnb} />
+          <CashierCards.FnbCard
+            key={fnb.id}
+            fnb={fnb}
+          />
         ))}
       </div>
     </section>

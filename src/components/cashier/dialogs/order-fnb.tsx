@@ -14,16 +14,16 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 type OrderFnbDialogProps = {
   fnbs: Fnb[],
+  nextAction: () => void;
 };
 
-export default function OrderFnbDialog(
-  { fnbs }: OrderFnbDialogProps
-) {
-  const navigate = useNavigate();
+export default function OrderFnbDialog({
+  fnbs,
+  nextAction,
+}: OrderFnbDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -60,7 +60,10 @@ export default function OrderFnbDialog(
       description: result.message ?? "Order berhasil dibuat",
       variant: result.error ? "destructive" : "default",
     });
-    if (!result.error) navigate(0);
+    if (!result.error) {
+      setIsOpen(false);
+      nextAction();
+    }
   }
 
   return (

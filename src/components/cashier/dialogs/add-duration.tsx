@@ -11,17 +11,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TimerReset } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
 type AddDurationDialogProps = {
   table: Table;
+  nextAction: () => void;
 };
 
-export default function AddDurationDialog(
-  { table }: AddDurationDialogProps
-) {
-  const navigate = useNavigate();
+export default function AddDurationDialog({
+  table,
+  nextAction,
+}: AddDurationDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -45,7 +45,10 @@ export default function AddDurationDialog(
       description: result.message,
       variant: "destructive",
     });
-    else navigate(0);
+    else {
+      setIsOpen(false);
+      nextAction();
+    }
   }
 
   return (

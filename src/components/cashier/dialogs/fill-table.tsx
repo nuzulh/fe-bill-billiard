@@ -16,18 +16,18 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { Checkbox } from "@/components/ui/checkbox";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 
 type FillTableDialogProps = {
   table: Table,
   fnbs: Fnb[],
+  nextAction: () => void;
 };
 
 export default function FillTableDialog({
   table,
   fnbs,
+  nextAction,
 }: FillTableDialogProps) {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -61,7 +61,10 @@ export default function FillTableDialog({
       description: result.message,
       variant: "destructive",
     });
-    else navigate(0);
+    else {
+      setIsOpen(false);
+      nextAction();
+    }
   }
 
   return (

@@ -8,12 +8,11 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Spinner } from "../../components";
 import { Services } from "@/services";
-import { useToast } from "@/components/ui/use-toast";
 import { LoginSchema, appStorage } from "@/lib";
+import { toast } from "@/components/ui/use-toast";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof LoginSchema>>({

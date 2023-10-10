@@ -1,12 +1,11 @@
 import { Spinner } from "@/components";
 import { FnbTable } from "@/components/admin";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Fnb } from "@/types";
 import React from "react";
 
 export default function FnbPage() {
-  const { toast } = useToast();
   const [fnbs, setFnbs] = React.useState<Fnb[] | null>(null);
 
   async function fetchFnbs() {
