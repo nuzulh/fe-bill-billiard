@@ -43,6 +43,9 @@ export default function DashboardPage() {
         <TabsContent value="billing" className="space-y-4">
           <CashierTabs.BillingTab />
         </TabsContent>
+        <TabsContent value="fnb" className="space-y-4">
+          <CashierTabs.FnbTab />
+        </TabsContent>
       </Tabs>
     </main>
   );
