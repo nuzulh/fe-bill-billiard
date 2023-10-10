@@ -57,5 +57,6 @@ export type Table = {
   name: string;
   price: number;
   device_id: string;
+  active: boolean;
   order?: Order;
 };
