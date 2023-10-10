@@ -1,15 +1,14 @@
 import React from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AppLayout } from "./components";
-import { useToast } from "./components/ui/use-toast";
 import { useAuthUser } from "./hooks";
 import { appStorage } from "./lib";
 import { AdminPages, AuthPages, CashierPages, ChefPages, UserPages } from "./pages";
+import { toast } from "./components/ui/use-toast";
 
 export default function App() {
   const authUser = useAuthUser();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   React.useEffect(() => {
     if (!authUser && !appStorage.get("token")) {

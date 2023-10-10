@@ -1,13 +1,12 @@
 import { Spinner } from "@/components";
 import { TableTable } from "@/components/admin";
 import DataTable from "@/components/data-table";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Table } from "@/types";
 import React from "react";
 
 export default function TablePage() {
-  const { toast } = useToast();
   const [tables, setTables] = React.useState<Table[] | null>(null);
 
   async function fetchTables() {

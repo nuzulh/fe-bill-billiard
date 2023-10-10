@@ -1,12 +1,11 @@
 import { Spinner } from "@/components";
-import { useToast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Fnb, Table } from "@/types";
 import { CashierCards } from "..";
 import React from "react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function BillingTab() {
-  const { toast } = useToast();
   const [tables, setTables] = React.useState<Table[] | null>(null);
   const [fnbs, setFnbs] = React.useState<Fnb[] | null>(null);
 

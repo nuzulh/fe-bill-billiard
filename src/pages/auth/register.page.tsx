@@ -8,12 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Spinner } from "../../components";
 import React from "react";
 import { RegisterSchema } from "@/lib";
-import { useToast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
+import { toast } from "@/components/ui/use-toast";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
