@@ -1,4 +1,4 @@
-import { CashierCards, CashierDialogs, Spinner } from "@/components";
+import { CashierCards, CashierDialogs, Loading } from "@/components";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
 import { Fnb } from "@/types";
@@ -21,7 +21,7 @@ export default function FnbTab() {
 
   React.useEffect(() => { fetchFnbs(); }, []);
 
-  if (!fnbs) return <Spinner />;
+  if (!fnbs) return <Loading />;
 
   return (
     <section className="flex flex-col gap-4 items-start">

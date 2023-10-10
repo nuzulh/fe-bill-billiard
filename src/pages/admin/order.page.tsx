@@ -1,4 +1,4 @@
-import { Spinner } from "@/components";
+import { Loading } from "@/components";
 import { OrderTable } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
@@ -24,7 +24,7 @@ export default function OrderPage() {
     fetchOrders();
   }, []);
 
-  if (!orders) return <Spinner />;
+  if (!orders) return <Loading />;
 
   return (
     <div className="container mx-auto py-10">

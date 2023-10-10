@@ -1,4 +1,4 @@
-import { Spinner } from "@/components";
+import { Loading } from "@/components";
 import { Services } from "@/services";
 import { Fnb, Table } from "@/types";
 import { CashierCards } from "..";
@@ -39,7 +39,7 @@ export default function BillingTab() {
     fetchFnbs();
   }, []);
 
-  if (!tables || !fnbs) return <Spinner />;
+  if (!tables || !fnbs) return <Loading />;
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
