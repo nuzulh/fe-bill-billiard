@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { AppLayout } from "./components";
+import { useToast } from "./components/ui/use-toast";
 import { useAuthUser } from "./hooks";
 import { appStorage } from "./lib";
-import { useToast } from "./components/ui/use-toast";
-import { AppLayout } from "./components";
 import { AdminPages, AuthPages, CashierPages, ChefPages, UserPages } from "./pages";
 
 export default function App() {
@@ -26,7 +26,10 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout authUser={authUser} />}>
-        <Route index element={<Navigate to={!authUser ? "/auth" : `/${authUser.role}`} />} />
+        <Route
+          index
+          element={<Navigate to={!authUser ? "/auth" : `/${authUser.role}`} />}
+        />
 
         <Route path="/auth">
           <Route index element={<Navigate to="/auth/login" />} />
@@ -36,6 +39,7 @@ export default function App() {
 
         <Route path="/admin">
           <Route index element={<AdminPages.DashboardPage />} />
+          <Route path="fnb" element={<AdminPages.FnbPage />} />
         </Route>
 
         <Route path="/cashier">
@@ -49,7 +53,6 @@ export default function App() {
         <Route path="/user">
           <Route index element={<UserPages.DashboardPage />} />
         </Route>
-
       </Route>
     </Routes>
   );
