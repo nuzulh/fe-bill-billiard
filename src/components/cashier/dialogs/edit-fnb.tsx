@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Check, ChevronsUpDown, Trash, UserPlus } from "lucide-react";
+import { Check, ChevronsUpDown, Salad, Trash, UserPlus } from "lucide-react";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as z from "zod";
-import { FillTableSchema } from "@/lib/schemas";
+import { EditFnbSchema } from "@/lib/schemas";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -18,30 +18,42 @@ import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
-type FillTableDialogProps = {
+type EditFnbDialogProps = {
   table: Table,
   fnbs: Fnb[],
 };
 
-export default function FillTableDialog({
+export default function EditFnbDialog({
   table,
   fnbs,
-}: FillTableDialogProps) {
+}: EditFnbDialogProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const form = useForm<z.infer<typeof FillTableSchema>>({
-    resolver: zodResolver(FillTableSchema),
+  const form = useForm<z.infer<typeof EditFnbSchema>>({
+    resolver: zodResolver(EditFnbSchema),
     defaultValues: {
-      costumer_name: "",
+      costumer_name: table.order?.costumer_name,
       table_order: {
         id: table.id,
-        duration: 0,
+        duration: table.order?.duration,
       },
-      order_items: [],
-      total_price: 0,
-      life_time: false,
+      order_items: table.order?.order_items.map(
+        (x) => ({
+          // ...x,
+          fnb_id: fnbs.find((f) => f.name === x.fnb?.name)?.id,
+          name: x.fnb?.name,
+          price: x.fnb?.price,
+          total_price: table.order?.order_items.reduce(
+            (a, b) => a + b.fnb?.price! || 0,
+            0
+          ),
+          quantity: x.quantity,
+        })
+      ),
+      total_price: table.order?.price,
+      life_time: table.order?.life_time,
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -52,9 +64,12 @@ export default function FillTableDialog({
   const duration = form.watch("table_order.duration");
   const lifeTime = form.watch("life_time");
 
-  async function onSubmit(val: z.infer<typeof FillTableSchema>) {
+  async function onSubmit(val: z.infer<typeof EditFnbSchema>) {
     setLoading(true);
-    const result = await Services.orderService.create(val as any);
+    const result = await Services.tableService.editFnb(
+      table.id,
+      val.order_items,
+    );
     setLoading(false);
     if (result.error) toast({
       title: "Gagal",
@@ -69,13 +84,13 @@ export default function FillTableDialog({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div className="flex gap-1 items-center">
-            <UserPlus className="mr-2 h-4 w-4" />
-            <span>Isi Meja</span>
+            <Salad className="mr-2 h-4 w-4" />
+            <span>Tambah F&B</span>
           </div>
         </DialogTrigger>
         <DialogContent className="max-w-[400px] sm:max-w-[425px] max-h-[80vh] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
-            <DialogTitle>Isi Meja Billiard</DialogTitle>
+            <DialogTitle>Tambah F&B</DialogTitle>
             <DialogDescription>
               Pastikan data yang diisi sudah benar
             </DialogDescription>
@@ -90,7 +105,7 @@ export default function FillTableDialog({
                     <FormItem>
                       <FormLabel>Nama Kostumer</FormLabel>
                       <FormControl>
-                        <Input placeholder="Masukkan nama kostumer" {...field} />
+                        <Input placeholder="Masukkan nama kostumer" {...field} disabled />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -104,6 +119,7 @@ export default function FillTableDialog({
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                       <FormControl>
                         <Checkbox
+                          disabled
                           checked={field.value}
                           onCheckedChange={(val) => {
                             form.setValue(
@@ -130,6 +146,7 @@ export default function FillTableDialog({
                       <FormItem>
                         <FormControl>
                           <Input
+                            disabled
                             placeholder="Masukkan durasi"
                             type="number"
                             {...field}
@@ -178,7 +195,9 @@ export default function FillTableDialog({
                                       ? fnbs.find(
                                         (fnb) => fnb.name === field.value
                                       )?.name
-                                      : "Pilih F&B"}
+                                      : table.order?.order_items.find(
+                                        (x) => x.fnb?.name === field.value
+                                      )?.fnb?.name || "Pilih F&B"}
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                   </Button>
                                 </FormControl>
@@ -197,7 +216,7 @@ export default function FillTableDialog({
                                             `order_items.${index}.name`
                                           );
                                           form.setValue(
-                                            `order_items.${index}.id`,
+                                            `order_items.${index}.fnb_id`,
                                             fnb.id
                                           );
                                           form.setValue(
@@ -289,7 +308,7 @@ export default function FillTableDialog({
                   size="sm"
                   className="mt-10"
                   onClick={() => append({
-                    id: 0,
+                    fnb_id: 0,
                     name: "",
                     quantity: 1,
                     price: 0,
@@ -305,7 +324,11 @@ export default function FillTableDialog({
                       value={new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR",
-                      }).format(orderItems.reduce((a, b) => a + b.price * b.quantity, 0) + table.price * (duration < 0 ? 0 : duration))}
+                      }).format(
+                        orderItems.reduce((a, b) => a + b.price * b.quantity, 0) + table.price * (duration < 0 ? 0 : duration) ||
+                        table.order?.price ||
+                        0
+                      )}
                       disabled
                     />
                   </FormControl>
@@ -313,7 +336,7 @@ export default function FillTableDialog({
                 </FormItem>
               </div>
               <Button disabled={loading} className="w-full mt-6" type="submit">
-                {loading ? <Spinner /> : "Isi Meja"}
+                {loading ? <Spinner /> : "Tambah F&B"}
               </Button>
             </form>
           </Form>

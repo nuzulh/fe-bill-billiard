@@ -61,3 +61,47 @@ export const FillTableSchema = z.object({
       }
     ),
 });
+
+export const EditFnbSchema = z.object({
+  table_order: z.object({
+    id: z.number(),
+    duration: z.number(),
+  }).optional(),
+  costumer_name: z
+    .string()
+    .min(1, "Nama harus diisi")
+    .max(100, "Nama maksimal 100 karakter").optional(),
+  life_time: z.boolean().optional(),
+  total_price: z.number().optional(),
+  order_items: z
+    .array(
+      z.object({
+        fnb_id: z.number(),
+        name: z.string(),
+        price: z.number(),
+        total_price: z.number(),
+        quantity: z
+          .number({
+            errorMap: () => ({
+              message: `Qty harus diisi`,
+            }),
+          })
+          .min(1, "Qty harus diisi"),
+      })
+    )
+    .refine(
+      (items) =>
+        items.find(
+          (item) => items.filter((i) => i.name === item.name).length > 1
+        ) === undefined,
+      {
+        message: "Gunakan qty untuk item yang sama",
+        path: [0, "name"],
+      }
+    ),
+});
+
+export const AddDurationSchema = z.object({
+  customer_name: z.string(),
+  duration: z.number().min(1, "Durasi harus diisi"),
+});

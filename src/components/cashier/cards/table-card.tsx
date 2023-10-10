@@ -69,10 +69,23 @@ export default function TableCard({ table, fnbs }: TableCardProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-primary text-primary-foreground">
-            <CashierDialogs.FillTableDialog
-              table={table}
-              fnbs={fnbs}
-            />
+            {status === "active" || table.order?.life_time ? (
+              <>
+                <CashierDialogs.EditFnbDialog
+                  table={table}
+                  fnbs={fnbs}
+                />
+                {table.order?.life_time ? null : (
+                  <CashierDialogs.AddDurationDialog table={table} />
+                )}
+                <CashierDialogs.StopTableDialog table={table} />
+              </>
+            ) : (
+              <CashierDialogs.FillTableDialog
+                table={table}
+                fnbs={fnbs}
+              />
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>
