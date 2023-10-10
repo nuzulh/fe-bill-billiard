@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AppLayout } from "./components";
 import { useAuthUser } from "./hooks";
 import { appStorage } from "./lib";
-import { AdminPages, AuthPages, CashierPages, ChefPages, UserPages } from "./pages";
+import { AdminPages, AuthPages, CashierPages, ChefPages, CommonPages, UserPages } from "./pages";
 import { toast } from "./components/ui/use-toast";
 
 export default function App() {
@@ -55,6 +55,8 @@ export default function App() {
           <Route index element={<UserPages.DashboardPage />} />
         </Route>
       </Route>
+
+      <Route path="*" element={<CommonPages.NotFoundPage />} />
     </Routes>
   );
 }

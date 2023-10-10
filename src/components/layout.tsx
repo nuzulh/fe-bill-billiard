@@ -64,7 +64,7 @@ export function AppLayout({ authUser }: AppLayoutProps) {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="hover:cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => navigate("/admin/table")}
                       >
                         <Tablets className="mr-2 h-4 w-4" />
                         <span>Data Meja</span>
@@ -78,14 +78,14 @@ export function AppLayout({ authUser }: AppLayoutProps) {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="hover:cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => navigate("/admin/order")}
                       >
                         <ListOrdered className="mr-2 h-4 w-4" />
                         <span>Data Orderan</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="hover:cursor-pointer"
-                        onClick={() => {}}
+                        onClick={() => navigate("/admin/user")}
                       >
                         <Users className="mr-2 h-4 w-4" />
                         <span>Data Pengguna</span>
