@@ -30,7 +30,7 @@ export default function TableCard({ table, fnbs }: TableCardProps) {
   );
 
   async function stopTable() {
-    const result = await Services.tableService.stop(table.id);
+    const result = await Services.tableService.stop(table.id, "done");
     if (result.error) toast({
       title: "Gagal",
       description: result.message,

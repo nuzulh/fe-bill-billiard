@@ -18,7 +18,7 @@ export default function StopTableDialog(
 
   async function onStopTable() {
     setLoading(true);
-    const result = await Services.tableService.stop(table.id);
+    const result = await Services.tableService.stop(table.id, "stop");
     setLoading(false);
     toast({
       title: result.error ? "Gagal" : "Berhasil",

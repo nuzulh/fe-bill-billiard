@@ -33,7 +33,7 @@ export const API = {
       baseUrl + path,
       {
         method: "POST",
-        body: JSON.stringify(body),
+        body: body ? JSON.stringify(body) : null,
         headers: { ...applyAuthHeader() },
         ...init,
       },
@@ -44,7 +44,7 @@ export const API = {
       baseUrl + path,
       {
         method: "PUT",
-        body: JSON.stringify(body),
+        body: body ? JSON.stringify(body) : null,
         headers: { ...applyAuthHeader() },
         ...init,
       },
@@ -55,7 +55,7 @@ export const API = {
       baseUrl + path,
       {
         method: "PATCH",
-        body: JSON.stringify(body),
+        body: body ? JSON.stringify(body) : null,
         headers: { ...applyAuthHeader() },
         ...init,
       },
