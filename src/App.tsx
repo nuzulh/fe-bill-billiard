@@ -40,6 +40,8 @@ export default function App() {
         <Route path="/admin">
           <Route index element={<AdminPages.DashboardPage />} />
           <Route path="fnb" element={<AdminPages.FnbPage />} />
+          <Route path="table" element={<AdminPages.TablePage />} />
+          <Route path="order" element={<AdminPages.OrderPage />} />
         </Route>
 
         <Route path="/cashier">

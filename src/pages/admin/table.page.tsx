@@ -1,39 +1,39 @@
 import { Spinner } from "@/components";
-import { FnbTable } from "@/components/admin";
+import { TableTable } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { useToast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
-import { Fnb } from "@/types";
+import { Table } from "@/types";
 import React from "react";
 
-export default function FnbPage() {
+export default function TablePage() {
   const { toast } = useToast();
-  const [fnbs, setFnbs] = React.useState<Fnb[] | null>(null);
+  const [tables, setTables] = React.useState<Table[] | null>(null);
 
-  async function fetchFnbs() {
-    const result = await Services.fnbService.getAll();
+  async function fetchTables() {
+    const result = await Services.tableService.getAll();
     if (result.error)
       toast({
         title: "Gagal",
         description: result.message,
         variant: "destructive",
       });
-    else setFnbs(result.data);
+    else setTables(result.data);
   }
 
   React.useEffect(() => {
-    fetchFnbs();
+    fetchTables();
   }, []);
 
-  if (!fnbs) return <Spinner />;
+  if (!tables) return <Spinner />;
 
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={FnbTable.fnbColumns}
-        data={fnbs}
+        columns={TableTable.tableColumns}
+        data={tables}
         filter="name"
-        filterPlaceHolder="nama produk..."
+        filterPlaceHolder="nama meja..."
       />
     </div>
   );

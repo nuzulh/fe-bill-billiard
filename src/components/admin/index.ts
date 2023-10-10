@@ -1,7 +1,15 @@
 import { fnbColumns } from "./fnb/columns";
-import FnbDataTable from "./fnb/data-table";
+import { orderColumns } from "./order/columns";
+import { tableColumns } from "./table/columns";
 
 export const FnbTable = {
   fnbColumns,
-  FnbDataTable,
+};
+
+export const TableTable = {
+  tableColumns,
+};
+
+export const OrderTable = {
+  orderColumns,
 };

@@ -26,11 +26,15 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  filter: keyof TData;
+  filterPlaceHolder: string;
 }
 
-export default function FnbDataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   columns,
   data,
+  filter,
+  filterPlaceHolder,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -53,9 +57,11 @@ export default function FnbDataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 gap-6 justify-between">
         <Input
-          placeholder="Filter nama..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={event => table.getColumn("name")?.setFilterValue(event.target.value)}
+          placeholder={`Filter ${filterPlaceHolder}`}
+          value={(table.getColumn(filter as string)?.getFilterValue() as string) ?? ""}
+          onChange={event =>
+            table.getColumn(filter as string)?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
       </div>
