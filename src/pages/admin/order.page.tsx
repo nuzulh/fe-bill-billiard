@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { OrderTable } from "@/components/admin";
+import { AdminColumns } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
@@ -29,7 +29,7 @@ export default function OrderPage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={OrderTable.orderColumns}
+        columns={AdminColumns.orderColumns}
         data={orders}
         filter="costumer_name"
         filterPlaceHolder="nama kostumer..."

@@ -1,15 +1,9 @@
-import { fnbColumns } from "./fnb/columns";
-import { orderColumns } from "./order/columns";
-import { tableColumns } from "./table/columns";
+import { fnbColumns } from "./columns/fnb-columns";
+import { orderColumns } from "./columns/order-columns";
+import { tableColumns } from "./columns/table-columns";
 
-export const FnbTable = {
+export const AdminColumns = {
   fnbColumns,
-};
-
-export const TableTable = {
   tableColumns,
-};
-
-export const OrderTable = {
   orderColumns,
 };

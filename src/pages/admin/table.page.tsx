@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { TableTable } from "@/components/admin";
+import { AdminColumns } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
@@ -29,7 +29,7 @@ export default function TablePage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={TableTable.tableColumns}
+        columns={AdminColumns.tableColumns}
         data={tables}
         filter="name"
         filterPlaceHolder="nama meja..."

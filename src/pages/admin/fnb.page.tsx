@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { FnbTable } from "@/components/admin";
+import { AdminColumns } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
@@ -29,7 +29,7 @@ export default function FnbPage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={FnbTable.fnbColumns}
+        columns={AdminColumns.fnbColumns}
         data={fnbs}
         filter="name"
         filterPlaceHolder="nama produk..."
