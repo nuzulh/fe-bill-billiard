@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Fnb, Table } from "@/types";
 import { Button } from "@/components/ui/button";
 import { DialogContainer, Spinner } from "@/components";
-import { cn } from "@/lib";
+import { cn, formatCurrency } from "@/lib";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -324,14 +324,13 @@ export default function EditFnbDialog({
                   <FormLabel>Harga</FormLabel>
                   <FormControl>
                     <Input
-                      value={new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(
-                        orderItems.reduce((a, b) => a + b.price * b.quantity, 0) + table.price * (duration < 0 ? 0 : duration) ||
-                        table.order?.price ||
-                        0
-                      )}
+                      value={
+                        formatCurrency(
+                          orderItems.reduce(
+                            (a, b) => a + b.price * b.quantity, 0) + table.price * (duration < 0 ? 0 : duration
+                            ) || table.order?.price || 0
+                        )
+                      }
                       disabled
                     />
                   </FormControl>

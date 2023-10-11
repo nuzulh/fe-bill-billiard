@@ -9,6 +9,7 @@ import { Countdown } from "@/components";
 import { useCountdown } from "@/hooks";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
+import { formatCurrency } from "@/lib";
 
 type TableCardProps = {
   table: Table;
@@ -119,10 +120,7 @@ export default function TableCard({
         </div>
         <p className="text-xs">
           Harga Per-Jam{" "}
-          {new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-          }).format(table.price)}
+          {formatCurrency(table.price)}
         </p>
       </CardContent>
     </Card>

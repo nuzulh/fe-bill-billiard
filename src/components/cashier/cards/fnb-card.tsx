@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatCurrency } from "@/lib";
 import { Fnb } from "@/types";
 import { Beer, Sandwich, UtensilsCrossed } from "lucide-react";
 
@@ -41,10 +42,7 @@ export default function FnbCard(
         <div className="text-2xl font-bold"></div>
         <p className="text-xs text-center">
           Harga{" "}
-          {new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-          }).format(fnb.price)}
+          {formatCurrency(fnb.price)}
         </p>
       </CardContent>
     </Card>

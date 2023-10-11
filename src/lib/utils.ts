@@ -19,3 +19,16 @@ export function validateRole(
     !location.includes(authUser.role)
   ) navigate("/", { replace: true });
 }
+
+export function formatCurrency(price: number) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(price);
+}
+
+export function formatDate(date: Date) {
+  return new Intl.DateTimeFormat("id-ID", {
+    dateStyle: "full",
+  }).format(new Date(date));
+}

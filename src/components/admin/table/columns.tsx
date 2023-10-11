@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib";
 import { Table } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
@@ -23,14 +24,10 @@ export const tableColumns: ColumnDef<Table>[] = [
     },
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      const formatted = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(price);
 
       return (
         <div className="flex items-center justify-center">
-          <span>{formatted}</span>
+          <span>{formatCurrency(price)}</span>
         </div>
       );
     },
@@ -59,13 +56,21 @@ export const tableColumns: ColumnDef<Table>[] = [
       const id = row.getValue("id") as string;
 
       return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-3">
           <Button
             onClick={() => {
               console.log("id", id);
             }}
           >
             Edit
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              console.log("id", id);
+            }}
+          >
+            Hapus
           </Button>
         </div>
       );

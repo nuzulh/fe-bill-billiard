@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib";
 import { Fnb } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Beer, Sandwich, UtensilsCrossed } from "lucide-react";
@@ -47,14 +48,10 @@ export const fnbColumns: ColumnDef<Fnb>[] = [
     },
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      const formatted = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(price);
 
       return (
         <div className="flex items-center justify-center">
-          <span>{formatted}</span>
+          <span>{formatCurrency(price)}</span>
         </div>
       );
     },

@@ -1,3 +1,4 @@
+import { formatCurrency, formatDate } from "@/lib";
 import { Order } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -10,9 +11,7 @@ export const orderColumns: ColumnDef<Order>[] = [
       return (
         <div className="flex items-center justify-center">
           <span>
-            {new Intl.DateTimeFormat("id-ID", {
-              dateStyle: "full",
-            }).format(new Date(createdAt))}
+            {formatDate(new Date(createdAt))}
           </span>
         </div>
       );
@@ -64,14 +63,10 @@ export const orderColumns: ColumnDef<Order>[] = [
     header: "Harga",
     cell: ({ row }) => {
       const price = row.getValue("price") as number;
-      const formatted = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(price);
 
       return (
         <div className="flex items-center justify-center">
-          <span>{formatted}</span>
+          <span>{formatCurrency(price)}</span>
         </div>
       );
     },

@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Fnb } from "@/types";
 import { Button } from "@/components/ui/button";
 import { DialogContainer, Spinner } from "@/components";
-import { OrderFnbSchema, cn } from "@/lib";
+import { OrderFnbSchema, cn, formatCurrency } from "@/lib";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Services } from "@/services";
@@ -220,12 +220,9 @@ export default function OrderFnbDialog({
                   <FormLabel>Harga</FormLabel>
                   <FormControl>
                     <Input
-                      value={new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(
-                        orderItems.reduce((a, b) => a + b.price * b.quantity, 0)
-                      )}
+                      value={
+                        formatCurrency(orderItems.reduce((a, b) => a + b.price * b.quantity, 0))
+                      }
                       disabled
                     />
                   </FormControl>
