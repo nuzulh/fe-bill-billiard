@@ -28,6 +28,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   filter: keyof TData;
   filterPlaceHolder: string;
+  actionElement?: React.JSX.Element;
 }
 
 export default function DataTable<TData, TValue>({
@@ -35,6 +36,7 @@ export default function DataTable<TData, TValue>({
   data,
   filter,
   filterPlaceHolder,
+  actionElement,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -64,6 +66,7 @@ export default function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        {actionElement ? actionElement : null}
       </div>
       <div className="rounded-md border">
         <Table>

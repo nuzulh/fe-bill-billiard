@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { AdminColumns } from "@/components/admin";
+import { AdminColumns, AdminDialogs } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
@@ -29,10 +29,11 @@ export default function TablePage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={AdminColumns.tableColumns}
+        columns={AdminColumns.tableColumns(fetchTables)}
         data={tables}
         filter="name"
         filterPlaceHolder="nama meja..."
+        actionElement={<AdminDialogs.AddTableDialog nextAction={fetchTables} />}
       />
     </div>
   );

@@ -145,3 +145,11 @@ export const OrderFnbSchema = z.object({
       }
     ),
 });
+
+
+export const AddTableSchema = z.object({
+  name: z.string().min(1, "Nama meja harus diisi"),
+  price: z.string().min(1, "Harga harus diisi"),
+  device_id: z.string().min(1, "Device ID harus diisi"),
+  active: z.boolean(),
+});
