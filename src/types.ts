@@ -19,21 +19,25 @@ export type User = {
   role: UserRole;
 };
 
+export type FnbCategory = "food" | "beverage" | "other";
+
 export type Fnb = {
   created_at: Date;
   id: number;
   name: string;
   price: number;
   stock: number;
-  category: string;
+  category: FnbCategory;
   active: boolean;
   image?: string;
 };
 
+export type OrderItemStatus = "pending" | "cooking" | "done";
+
 export type OrderItem = {
   id: string;
   quantity: number;
-  status: "pending" | "cooking" | "done";
+  status: OrderItemStatus;
   fnb: Fnb;
 };
 

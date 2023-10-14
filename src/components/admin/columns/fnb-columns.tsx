@@ -5,38 +5,41 @@ import { Fnb } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Beer, Sandwich, UtensilsCrossed } from "lucide-react";
 
-export const fnbColumns: ColumnDef<Fnb>[] = [
-  {
-    accessorKey: "image",
-    header: "Gambar",
-    cell: ({ row }) => {
-      const image = row.getValue("image") as string | null;
-      const category = row.getValue("category") as "food" | "beverage" | "other";
-      const categoryIdLang = {
-        food: <Sandwich />,
-        beverage: <Beer />,
-        other: <UtensilsCrossed />,
-      };
-      return image ? (
-        <div className="flex items-center justify-center">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={image} alt="img" />
-            <AvatarFallback>{categoryIdLang[category]}</AvatarFallback>
-          </Avatar>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center">{categoryIdLang[category]}</div>
-      );
+export const fnbColumns = (
+  nextAction: () => void
+): ColumnDef<Fnb>[] => [
+    {
+      accessorKey: "image",
+      header: "Gambar",
+      cell: ({ row }) => {
+        const categoryIdLang = {
+          food: <Sandwich />,
+          beverage: <Beer />,
+          other: <UtensilsCrossed />,
+        };
+        return row.original.image ? (
+          <div className="flex items-center justify-center">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={row.original.image} alt="img" />
+              <AvatarFallback>
+                {categoryIdLang[row.original.category]}
+              </AvatarFallback>
+            </Avatar>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center">
+            {categoryIdLang[row.original.category]}
+          </div>
+        );
+      },
     },
-  },
-  {
-    accessorKey: "name",
-    header: "Nama Produk",
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
+    {
+      accessorKey: "name",
+      header: "Nama Produk",
+    },
+    {
+      accessorKey: "price",
+      header: ({ column }) => (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -44,49 +47,41 @@ export const fnbColumns: ColumnDef<Fnb>[] = [
           Harga
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const price = row.getValue("price") as number;
-
-      return (
+      ),
+      cell: ({ row }) => (
         <div className="flex items-center justify-center">
-          <span>{formatCurrency(price)}</span>
+          <span>{formatCurrency(row.original.price)}</span>
         </div>
-      );
+      ),
     },
-  },
-  {
-    accessorKey: "stock",
-    header: "Stok",
-  },
-  {
-    accessorKey: "category",
-    header: "Kategori",
-  },
-  {
-    accessorKey: "active",
-    header: "Dipasarkan?",
-    cell: ({ row }) => {
-      const active = row.getValue("active") as boolean;
-      return (
+    {
+      accessorKey: "stock",
+      header: "Stok",
+    },
+    {
+      accessorKey: "category",
+      header: "Kategori",
+    },
+    {
+      accessorKey: "active",
+      header: "Dipasarkan?",
+      cell: ({ row }) => (
         <div className="flex items-center justify-center">
-          {active ? (
+          {row.original.active ? (
             <span className="text-green-500">Ya</span>
           ) : (
             <span className="text-red-500">Tidak</span>
           )}
         </div>
-      );
+      ),
     },
-  },
-  {
-    accessorKey: "id",
-    header: "Aksi",
-    cell: ({ row }) => {
-      const id = row.getValue("id") as string;
-      console.log(id);
-      return <Button>Test</Button>;
+    {
+      accessorKey: "id",
+      header: "Aksi",
+      cell: ({ row }) => (
+        <Button onClick={nextAction}>
+          Test {row.original.id}
+        </Button>
+      ),
     },
-  },
-];
+  ];

@@ -29,7 +29,7 @@ export default function FnbPage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={AdminColumns.fnbColumns}
+        columns={AdminColumns.fnbColumns(fetchFnbs)}
         data={fnbs}
         filter="name"
         filterPlaceHolder="nama produk..."

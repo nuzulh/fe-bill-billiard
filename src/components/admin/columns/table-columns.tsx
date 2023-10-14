@@ -14,26 +14,20 @@ export const tableColumns = (
     },
     {
       accessorKey: "price",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Harga
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        const price = row.getValue("price") as number;
-
-        return (
-          <div className="flex items-center justify-center">
-            <span>{formatCurrency(price)}</span>
-          </div>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Harga
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="flex items-center justify-center">
+          <span>{formatCurrency(row.original.price)}</span>
+        </div>
+      ),
     },
     {
       accessorKey: "device_id",
@@ -42,15 +36,11 @@ export const tableColumns = (
     {
       accessorKey: "active",
       header: "Bisa Digunakan?",
-      cell: ({ row }) => {
-        const active = row.getValue("active") as boolean;
-
-        return (
-          <div className="flex items-center justify-center">
-            <span>{active ? "Bisa" : "Tidak Bisa"}</span>
-          </div>
-        );
-      },
+      cell: ({ row }) => (
+        <div className="flex items-center justify-center">
+          <span>{row.original.active ? "Bisa" : "Tidak Bisa"}</span>
+        </div>
+      ),
     },
     {
       accessorKey: "id",
@@ -66,6 +56,6 @@ export const tableColumns = (
             nextAction={nextAction}
           />
         </div>
-      )
+      ),
     },
   ];

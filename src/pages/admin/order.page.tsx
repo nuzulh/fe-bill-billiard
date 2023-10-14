@@ -29,7 +29,7 @@ export default function OrderPage() {
   return (
     <div className="container mx-auto py-10">
       <DataTable
-        columns={AdminColumns.orderColumns}
+        columns={AdminColumns.orderColumns()}
         data={orders}
         filter="costumer_name"
         filterPlaceHolder="nama kostumer..."
