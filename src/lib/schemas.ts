@@ -66,7 +66,7 @@ export const FillTableSchema = z.object({
 });
 
 
-export const EditFnbSchema = z.object({
+export const EditOrderSchema = z.object({
   table_order: z.object({
     id: z.number(),
     duration: z.number(),
@@ -152,4 +152,18 @@ export const AddTableSchema = z.object({
   price: z.string().min(1, "Harga harus diisi"),
   device_id: z.string().min(1, "Device ID harus diisi"),
   active: z.boolean(),
+});
+
+
+export const AddFnbSchema = z.object({
+  id: z.string().optional(),
+  image: z.string().nullable(),
+  name: z
+    .string()
+    .min(1, "Nama harus diisi")
+    .max(100, "Nama maksimal 100 karakter"),
+  price: z.string().min(1, "Harga harus diisi"),
+  stock: z.string().min(1, "Stok harus diisi"),
+  category: z.enum(["food", "beverage", "other"]).default("other"),
+  active: z.enum(["true", "false"]).default("true"),
 });

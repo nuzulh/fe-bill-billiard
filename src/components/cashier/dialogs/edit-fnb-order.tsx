@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Check, ChevronsUpDown, Salad, Trash } from "lucide-react";
 import { useForm, useFieldArray } from "react-hook-form";
 import * as z from "zod";
-import { EditFnbSchema } from "@/lib/schemas";
+import { EditOrderSchema } from "@/lib/schemas";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -17,22 +17,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Services } from "@/services";
 import { toast } from "@/components/ui/use-toast";
 
-type EditFnbDialogProps = {
+type EditFnbOrderDialogProps = {
   table: Table,
   fnbs: Fnb[],
   nextAction: () => void;
 };
 
-export default function EditFnbDialog({
+export default function EditFnbOrderDialog({
   table,
   fnbs,
   nextAction,
-}: EditFnbDialogProps) {
+}: EditFnbOrderDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const form = useForm<z.infer<typeof EditFnbSchema>>({
-    resolver: zodResolver(EditFnbSchema),
+  const form = useForm<z.infer<typeof EditOrderSchema>>({
+    resolver: zodResolver(EditOrderSchema),
     defaultValues: {
       costumer_name: table.order?.costumer_name,
       table_order: {
@@ -64,9 +64,9 @@ export default function EditFnbDialog({
   const duration = form.watch("table_order.duration");
   const lifeTime = form.watch("life_time");
 
-  async function onSubmit(val: z.infer<typeof EditFnbSchema>) {
+  async function onSubmit(val: z.infer<typeof EditOrderSchema>) {
     setLoading(true);
-    const result = await Services.tableService.editFnb(
+    const result = await Services.tableService.editFnbOrder(
       table.id,
       val.order_items,
     );

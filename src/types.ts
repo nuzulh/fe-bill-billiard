@@ -29,7 +29,7 @@ export type Fnb = {
   stock: number;
   category: FnbCategory;
   active: boolean;
-  image?: string;
+  image: string | null;
 };
 
 export type OrderItemStatus = "pending" | "cooking" | "done";

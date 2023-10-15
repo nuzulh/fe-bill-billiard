@@ -3,28 +3,28 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
-import { Table } from "@/types";
+import { Fnb } from "@/types";
 import React from "react";
 
-type DeleteTableDialogProps = {
-  table: Table;
+type DeleteFnbDialogProps = {
+  fnb: Fnb;
   nextAction: () => void;
 };
 
-export default function DeleteTableDialog({
-  table,
+export default function DeleteFnbDialog({
+  fnb,
   nextAction,
-}: DeleteTableDialogProps) {
+}: DeleteFnbDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
   async function onDelete() {
     setLoading(true);
-    const result = await Services.tableService.delete(table.id);
+    const result = await Services.fnbService.delete(fnb.id);
     setLoading(false);
     toast({
       title: result.error ? "Gagal" : "Berhasil",
-      description: result.message ?? "Meja berhasil dihapus",
+      description: result.message ?? "Produk berhasil dihapus",
       variant: result.error ? "destructive" : "default",
     });
     if (!result.error) {
@@ -42,7 +42,7 @@ export default function DeleteTableDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>
             Apakah anda yakin ingin menghapus{" "}
-            <span className="font-extrabold underline">{table.name}</span>
+            <span className="font-extrabold underline">{fnb.name}</span>
           </AlertDialogTitle>
           <AlertDialogDescription>
             Aksi ini akan menghapus data secara permanen, data yang telah

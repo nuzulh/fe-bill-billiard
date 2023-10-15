@@ -1,5 +1,5 @@
 import { Loading } from "@/components";
-import { AdminColumns } from "@/components/admin";
+import { AdminColumns, AdminDialogs } from "@/components/admin";
 import DataTable from "@/components/data-table";
 import { toast } from "@/components/ui/use-toast";
 import { Services } from "@/services";
@@ -33,6 +33,7 @@ export default function FnbPage() {
         data={fnbs}
         filter="name"
         filterPlaceHolder="nama produk..."
+        actionElement={<AdminDialogs.AddFnbDialog nextAction={fetchFnbs} />}
       />
     </div>
   );

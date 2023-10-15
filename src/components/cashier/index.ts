@@ -3,7 +3,7 @@ import FnbTab from "./tabs/fnb-tab";
 import TableCard from "./cards/table-card";
 import FnbCard from "./cards/fnb-card";
 import FillTableDialog from "./dialogs/fill-table";
-import EditFnbDialog from "./dialogs/edit-fnb";
+import EditFnbOrderDialog from "./dialogs/edit-fnb-order";
 import StopTableDialog from "./dialogs/stop-table";
 import AddDurationDialog from "./dialogs/add-duration";
 import OrderFnbDialog from "./dialogs/order-fnb";
@@ -20,7 +20,7 @@ export const CashierCards = {
 
 export const CashierDialogs = {
   FillTableDialog,
-  EditFnbDialog,
+  EditFnbOrderDialog,
   StopTableDialog,
   AddDurationDialog,
   OrderFnbDialog,

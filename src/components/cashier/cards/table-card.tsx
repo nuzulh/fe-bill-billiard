@@ -78,7 +78,7 @@ export default function TableCard({
           <DropdownMenuContent className="bg-primary text-primary-foreground">
             {status === "active" || table.order?.life_time ? (
               <>
-                <CashierDialogs.EditFnbDialog
+                <CashierDialogs.EditFnbOrderDialog
                   table={table}
                   fnbs={fnbs}
                   nextAction={nextAction}

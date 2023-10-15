@@ -7,7 +7,7 @@ type TableService = {
   create(data: Partial<Table>): Promise<ApiResponse<Table>>;
   update(id: number, data: Partial<Table>): Promise<ApiResponse<Table>>;
   delete(id: number): Promise<ApiResponse<any>>;
-  editFnb(
+  editFnbOrder(
     tableId: number,
     orderItems: {
       fnb_id: number;
@@ -24,7 +24,7 @@ export default {
   create: async (data) => await API.post("/table", data),
   update: async (id, data) => await API.put(`/table/${id}`, data),
   delete: async (id) => await API.delete(`/table/${id}`),
-  editFnb: async (id, orderItems) => await API.patch(
+  editFnbOrder: async (id, orderItems) => await API.patch(
     `/table-action/edit-fnb/${id}`,
     { order_items: orderItems }
   ),

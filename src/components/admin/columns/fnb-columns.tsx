@@ -4,6 +4,7 @@ import { formatCurrency } from "@/lib";
 import { Fnb } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Beer, Sandwich, UtensilsCrossed } from "lucide-react";
+import { AdminDialogs } from "..";
 
 export const fnbColumns = (
   nextAction: () => void
@@ -79,9 +80,16 @@ export const fnbColumns = (
       accessorKey: "id",
       header: "Aksi",
       cell: ({ row }) => (
-        <Button onClick={nextAction}>
-          Test {row.original.id}
-        </Button>
+        <div className="flex items-center justify-center gap-3">
+          <AdminDialogs.EditFnbDialog
+            fnb={row.original}
+            nextAction={nextAction}
+          />
+          <AdminDialogs.DeleteFnbDialog
+            fnb={row.original}
+            nextAction={nextAction}
+          />
+        </div>
       ),
     },
   ];
