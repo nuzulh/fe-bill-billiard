@@ -167,3 +167,8 @@ export const AddFnbSchema = z.object({
   category: z.enum(["food", "beverage", "other"]).default("other"),
   active: z.enum(["true", "false"]).default("true"),
 });
+
+
+export const PayOrderSchema = z.object({
+  note: z.string().optional(),
+});

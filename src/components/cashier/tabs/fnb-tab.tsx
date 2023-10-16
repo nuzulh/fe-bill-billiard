@@ -17,9 +17,9 @@ export default function FnbTab() {
     else setFnbs(result.data);
   }
 
-  function nextAction() { fetchFnbs(); }
-
-  React.useEffect(() => { fetchFnbs(); }, []);
+  React.useEffect(() => {
+    fetchFnbs();
+  }, []);
 
   if (!fnbs) return <Loading />;
 
@@ -27,7 +27,7 @@ export default function FnbTab() {
     <section className="flex flex-col gap-4 items-start">
       <CashierDialogs.OrderFnbDialog
         fnbs={fnbs}
-        nextAction={nextAction}
+        nextAction={fetchFnbs}
       />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
         {fnbs.map((fnb) => (

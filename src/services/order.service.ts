@@ -3,10 +3,10 @@ import { ApiResponse, Order } from "@/types";
 
 type OrderService = {
   getAll(): Promise<ApiResponse<Order[]>>;
-  getOne(id: number): Promise<ApiResponse<Order>>;
+  getOne(id: string): Promise<ApiResponse<Order>>;
   create(data: Partial<Order>): Promise<ApiResponse<Order>>;
-  patchNote(id: number, note: string): Promise<ApiResponse<string>>;
-  delete(id: number): Promise<ApiResponse<any>>;
+  patchNote(id: string, note?: string): Promise<ApiResponse<string>>;
+  delete(id: string): Promise<ApiResponse<any>>;
 };
 
 export default {

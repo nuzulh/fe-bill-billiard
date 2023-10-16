@@ -6,3 +6,4 @@ export * from "./cashier";
 export * from "./countdown";
 export * from "./dialog-container";
 export * from "./loading";
+export * from "./data-table";

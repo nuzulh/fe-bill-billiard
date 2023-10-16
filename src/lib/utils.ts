@@ -32,3 +32,22 @@ export function formatDate(date: Date) {
     dateStyle: "full",
   }).format(new Date(date));
 }
+
+export function formatTime(date: Date) {
+  return new Intl.DateTimeFormat("id-ID", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+    timeZone: "Asia/Jakarta",
+  }).format(new Date(date));
+}
+
+export function formatDuration(num: number) {
+  if (`${num}`.startsWith("0"))
+    return `${num * 60} Menit`;
+  return `${num} Jam`;
+}

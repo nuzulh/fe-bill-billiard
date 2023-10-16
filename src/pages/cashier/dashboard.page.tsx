@@ -7,7 +7,7 @@ export default function DashboardPage() {
   const tabMenu = searchParams.get("tab") ?? "billing";
 
   return (
-    <main className="container flex flex-col">
+    <main className="container flex flex-col overflow-x-hidden">
       <Tabs
         className="space-y-4"
         defaultValue={tabMenu}
@@ -27,9 +27,9 @@ export default function DashboardPage() {
         <TabsContent value="fnb" className="space-y-4">
           <CashierTabs.FnbTab />
         </TabsContent>
-        {/* <TabsContent value="order" className="space-y-4">
+        <TabsContent value="order" className="pb-10">
           <CashierTabs.OrderTab />
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
     </main>
   );

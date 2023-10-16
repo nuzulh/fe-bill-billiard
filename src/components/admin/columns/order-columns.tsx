@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/lib";
+import { formatCurrency, formatDate, formatDuration } from "@/lib";
 import { Order } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -26,7 +26,7 @@ export const orderColumns = (
       cell: ({ row }) => (
         <div className="flex items-center justify-center">
           <span>
-            {row.original.table ? `${row.original.duration} Jam` : "-"}
+            {row.original.table ? formatDuration(row.original.duration) : "-"}
           </span>
         </div>
       ),

@@ -11,7 +11,7 @@ export default function App() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (!authUser && !appStorage.get("token")) {
+    if (!authUser && appStorage.get("token")) {
       toast({
         title: "Token telah kedaluwarsa",
         description: "Silahkan login kembali",
