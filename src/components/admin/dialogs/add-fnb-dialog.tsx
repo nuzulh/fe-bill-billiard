@@ -43,7 +43,7 @@ export default function AddFnbDialog({
       name: val.name,
       price: Number(val.price),
       stock: Number(val.stock),
-      active: Boolean(val.active),
+      active: val.active === "true",
       category: val.category,
     }));
     setLoading(false);
