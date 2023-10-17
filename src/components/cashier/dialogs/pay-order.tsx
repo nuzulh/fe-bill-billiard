@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { PayOrderSchema, onPrint } from "@/lib";
+import { PayOrderSchema, formatCurrency, formatDuration, onPrint } from "@/lib";
 import { Services } from "@/services";
 import { Order } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,6 +57,35 @@ export default function PayOrderDialog({
         <DialogHeader>
           <DialogTitle>Bayar</DialogTitle>
         </DialogHeader>
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <p className="text-sm">Nama Pelanggan:</p>
+            <p className="text-sm font-semibold">{order.costumer_name}</p>
+          </div>
+          {order.table && (
+            <>
+              <div className="flex justify-between items-center">
+                <p className="text-sm">Meja:</p>
+                <p className="text-sm font-semibold">{order.table}</p>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-sm">Durasi:</p>
+                <p className="text-sm font-semibold">{formatDuration(order.duration)}</p>
+              </div>
+            </>
+          )}
+          {order.order_items.length > 0 && order.order_items.map((x) => (
+            <div className="flex justify-between items-center" key={x.id}>
+              <p className="text-sm">{`${x.fnb}`}:</p>
+              <p className="text-sm font-semibold">{x.quantity}x</p>
+            </div>
+          ))}
+          <hr />
+          <div className="flex justify-between items-center">
+            <p className="text-sm font-semibold">Harga:</p>
+            <p className="text-sm font-bold">{formatCurrency(order.price)}</p>
+          </div>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
             <div className="space-y-2">

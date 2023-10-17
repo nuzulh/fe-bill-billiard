@@ -7,7 +7,7 @@ export default function DashboardPage() {
   const tabMenu = searchParams.get("tab") ?? "billing";
 
   return (
-    <main className="container flex flex-col overflow-x-hidden">
+    <main className="container flex flex-col">
       <Tabs
         className="space-y-4"
         defaultValue={tabMenu}

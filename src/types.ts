@@ -39,6 +39,7 @@ export type OrderItem = {
   quantity: number;
   status: OrderItemStatus;
   fnb: Fnb;
+  order?: Order;
 };
 
 export type Order = {
@@ -54,6 +55,7 @@ export type Order = {
   duration: number;
   life_time: boolean;
   order_items: Partial<OrderItem>[];
+  stopped: boolean;
 };
 
 export type Table = {

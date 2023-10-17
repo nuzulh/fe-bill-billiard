@@ -31,10 +31,18 @@ export default function InvoiceDialog({
             <p className="text-sm">Nama Pelanggan:</p>
             <p className="text-sm font-semibold">{order.costumer_name}</p>
           </div>
-          <div className="flex justify-between items-center">
-            <p className="text-sm">Durasi:</p>
-            <p className="text-sm font-semibold">{formatDuration(order.duration)}</p>
-          </div>
+          {order.table && (
+            <>
+              <div className="flex justify-between items-center">
+                <p className="text-sm">Meja:</p>
+                <p className="text-sm font-semibold">{order.table}</p>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-sm">Durasi:</p>
+                <p className="text-sm font-semibold">{formatDuration(order.duration)}</p>
+              </div>
+            </>
+          )}
           {order.order_items.length > 0 && order.order_items.map((x) => (
             <div className="flex justify-between items-center" key={x.id}>
               <p className="text-sm">{`${x.fnb}`}:</p>

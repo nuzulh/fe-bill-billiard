@@ -5,7 +5,7 @@ import logoDark from "../assets/logo-dark.png";
 import { ModeToggle } from "./mode-toggle";
 import { DecodedToken } from "@/hooks";
 import { Button } from "./ui/button";
-import { CandlestickChart, ChevronDown, ConciergeBell, ListOrdered, LogOut, Tablets, Users, UtensilsCrossed } from "lucide-react";
+import { CandlestickChart, ChefHat, ChevronDown, ConciergeBell, ListOrdered, LogOut, Tablets, Users, UtensilsCrossed } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { UserRole } from "@/types";
 import { Services } from "@/services";
@@ -97,6 +97,13 @@ export function AppLayout({ authUser }: AppLayoutProps) {
                         <ConciergeBell className="mr-2 h-4 w-4" />
                         <span>Kasir</span>
                       </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="hover:cursor-pointer"
+                        onClick={() => navigate("/chef")}
+                      >
+                        <ChefHat className="mr-2 h-4 w-4" />
+                        <span>Koki</span>
+                      </DropdownMenuItem>
                     </>
                   ) : null}
                   <DropdownMenuItem
@@ -113,13 +120,13 @@ export function AppLayout({ authUser }: AppLayoutProps) {
         </div>
       </div>
       {!authUser ? (
-        <div className="h-[90vh] w-screen flex flex-col justify-center items-center">
+        <div className="min-h-[90vh] min-w-screen flex flex-col justify-center items-center">
           <div className="bg-secondary p-10 rounded-md">
             <Outlet />
           </div>
         </div>
       ) : (
-        <div className="h-[90vh] w-screen flex flex-col p-4">
+        <div className="min-h-[90vh] min-w-screen flex flex-col p-4">
           <Outlet />
         </div>
       )}
