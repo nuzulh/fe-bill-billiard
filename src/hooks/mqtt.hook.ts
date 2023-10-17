@@ -8,19 +8,20 @@ type MqttPayload = {
   message: string;
 };
 
-export function useMqttClient(host: string, mqttOption?: mqtt.IClientOptions) {
+export function useMqttClient(host: string | null, mqttOption?: mqtt.IClientOptions) {
   const [status, setStatus] = React.useState<MqttStatus>("noaction");
   const [client, setClient] = React.useState<mqtt.MqttClient | null>(null);
   const [payload, setPayload] = React.useState<MqttPayload | null>(null);
 
-  function mqttConnect(host: string, mqttOption?: mqtt.IClientOptions) {
+  async function mqttConnect(host: string, mqttOption?: mqtt.IClientOptions) {
     setStatus("connecting");
-    setClient(mqtt.connect(host, mqttOption));
-  };
+    const client = await mqtt.connectAsync(host, mqttOption);
+    setClient(client);
+  }
 
   React.useEffect(() => {
     if (client) {
-      console.log(client);
+      client.subscribe("orders");
       client.on("connect", () => {
         setStatus("connected");
       });
@@ -35,8 +36,10 @@ export function useMqttClient(host: string, mqttOption?: mqtt.IClientOptions) {
         const payload = { topic, message: message.toString() };
         setPayload(payload);
       });
-    } else mqttConnect(host, mqttOption);
-  }, [client]);
+    } else {
+      if (host) mqttConnect(host, mqttOption);
+    }
+  }, [client, host]);
 
   return { status, client, payload };
 }

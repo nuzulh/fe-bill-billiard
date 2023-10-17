@@ -1,34 +1,31 @@
-import { OrderItem } from "@/types";
-import React from "react";
-import { ChevronDown } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChefDialogs } from "..";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { formatTime } from "@/lib";
+import { OrderItem } from "@/types";
+import { ChevronDown } from "lucide-react";
+import React from "react";
+import { ChefDialogs } from "..";
 
 type ChefCardProps = {
   orderItem: OrderItem;
   nextAction: () => void;
 };
 
-export default function ChefCard({
-  orderItem,
-  nextAction,
-}: ChefCardProps) {
+export default function ChefCard({ orderItem, nextAction }: ChefCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <Card
-      className={
-        orderItem.status === "pending"
-          ? "bg-red-500"
-          : "bg-amber-500"
-      }
-    >
+    <Card className={orderItem.status === "pending" ? "bg-red-500" : "bg-amber-500"}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
-          <p className="text-xl font-bold">{orderItem.fnb.name} ({orderItem.quantity} pcs)</p>
+          <p className="text-xl font-bold">
+            {orderItem.fnb.name} ({orderItem.quantity} pcs)
+          </p>
         </CardTitle>
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger asChild>
@@ -39,15 +36,9 @@ export default function ChefCard({
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-primary text-primary-foreground">
             {orderItem.status === "pending" ? (
-              <ChefDialogs.ProcessDialog
-                orderItem={orderItem}
-                nextAction={nextAction}
-              />
+              <ChefDialogs.ProcessDialog orderItem={orderItem} nextAction={nextAction} />
             ) : (
-              <ChefDialogs.FinishDialog
-                orderItem={orderItem}
-                nextAction={nextAction}
-              />
+              <ChefDialogs.FinishDialog orderItem={orderItem} nextAction={nextAction} />
             )}
           </DropdownMenuContent>
         </DropdownMenu>

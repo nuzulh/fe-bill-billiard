@@ -66,3 +66,12 @@ export type Table = {
   active: boolean;
   order?: Order;
 };
+
+export type MqttHost = {
+  id: number;
+  protocol: string;
+  host: string;
+  port: number;
+  username: string | null;
+  password: string | null;
+};
