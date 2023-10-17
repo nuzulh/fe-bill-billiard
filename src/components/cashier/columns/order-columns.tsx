@@ -1,4 +1,3 @@
-import { useCountdown } from "@/hooks";
 import { formatCurrency, formatDuration, formatTime } from "@/lib";
 import { Order } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -45,26 +44,17 @@ export const orderColumns = (
     {
       accessorKey: "created_by",
       header: "Berlangsung?",
-      cell: ({ row }) => {
-        const { status } = useCountdown(
-          row.original.created_at,
-          row.original.duration
-        );
-
-        return (
-          <div
-            className={
-              status === "active"
-                ? "text-green-500"
-                : status === "emergency"
-                  ? "text-amber-500"
-                  : "text-red-500"
-            }
-          >
-            {status !== "inactive" ? "Ya" : "Tidak"}
-          </div>
-        );
-      },
+      cell: ({ row }) => row.original.table ? (
+        <div
+          className={
+            !row.original.stopped
+              ? "text-red-500"
+              : "text-green-500"
+          }
+        >
+          {!row.original.stopped ? "Tidak" : "Ya"}
+        </div>
+      ) : "-",
     },
     {
       accessorKey: "paid",
