@@ -74,7 +74,7 @@ export default function FillTableDialog({
 
   async function onSubmit(val: z.infer<typeof FillTableSchema>) {
     setLoading(true);
-    const result = await Services.orderService.create(val as any);
+    const result = await Services.orderService.create(val as never);
     setLoading(false);
     if (result.error)
       toast({
@@ -263,7 +263,7 @@ export default function FillTableDialog({
                                   setValueAs: value => Number(value) || "",
                                   min: 1,
                                   onChange(event) {
-                                    let price = form.getValues(
+                                    const price = form.getValues(
                                       `order_items.${index}.price`,
                                     );
                                     form.setValue(

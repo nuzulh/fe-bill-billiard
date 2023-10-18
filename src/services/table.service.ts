@@ -6,16 +6,16 @@ type TableService = {
   getOne(id: number): Promise<ApiResponse<Table>>;
   create(data: Partial<Table>): Promise<ApiResponse<Table>>;
   update(id: number, data: Partial<Table>): Promise<ApiResponse<Table>>;
-  delete(id: number): Promise<ApiResponse<any>>;
+  delete(id: number): Promise<ApiResponse<unknown>>;
   editFnbOrder(
     tableId: number,
     orderItems: {
       fnb_id: number;
       quantity: number;
     }[]
-  ): Promise<ApiResponse<any>>;
-  addDuration(tableId: number, duration: number): Promise<ApiResponse<any>>;
-  stop(id: number, reason: "stop" | "done"): Promise<ApiResponse<any>>;
+  ): Promise<ApiResponse<unknown>>;
+  addDuration(tableId: number, duration: number): Promise<ApiResponse<unknown>>;
+  stop(id: number, reason: "stop" | "done"): Promise<ApiResponse<unknown>>;
 };
 
 export default {

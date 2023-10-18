@@ -53,7 +53,7 @@ export default function OrderFnbDialog({
 
   async function onSubmit(val: z.infer<typeof OrderFnbSchema>) {
     setLoading(true);
-    const result = await Services.orderService.create(val as any);
+    const result = await Services.orderService.create(val as never);
     setLoading(false);
     toast({
       title: result.error ? "Gagal" : "Berhasil",
@@ -174,7 +174,7 @@ export default function OrderFnbDialog({
                                     setValueAs: (value) => Number(value) || "",
                                     min: 1,
                                     onChange(event) {
-                                      let price = form.getValues(
+                                      const price = form.getValues(
                                         `order_items.${index}.price`
                                       );
                                       form.setValue(

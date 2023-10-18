@@ -18,7 +18,7 @@ type UserService = {
   getOne(id: string): Promise<ApiResponse<User>>;
   create(data: Partial<User>): Promise<ApiResponse<User>>;
   update(id: string, data: Partial<User>): Promise<ApiResponse<User>>;
-  delete(id: string): Promise<ApiResponse<any>>;
+  delete(id: string): Promise<ApiResponse<unknown>>;
 };
 
 export default {

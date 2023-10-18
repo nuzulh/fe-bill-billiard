@@ -6,7 +6,7 @@ type FnbService = {
   getOne(id: number): Promise<ApiResponse<Fnb>>;
   create(data: Partial<Fnb>): Promise<ApiResponse<Fnb>>;
   update(id: number, data: Partial<Fnb>): Promise<ApiResponse<Fnb>>;
-  delete(id: number): Promise<ApiResponse<any>>;
+  delete(id: number): Promise<ApiResponse<unknown>>;
 };
 
 export default {

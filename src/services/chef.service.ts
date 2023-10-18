@@ -3,8 +3,8 @@ import { ApiResponse, OrderItem } from "@/types";
 
 type ChefService = {
   getAll(): Promise<ApiResponse<OrderItem[]>>;
-  process(id: string): Promise<ApiResponse<any>>;
-  finish(id: string): Promise<ApiResponse<any>>;
+  process(id: string): Promise<ApiResponse<unknown>>;
+  finish(id: string): Promise<ApiResponse<unknown>>;
 };
 
 export default {

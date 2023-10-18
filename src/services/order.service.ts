@@ -6,7 +6,7 @@ type OrderService = {
   getOne(id: string): Promise<ApiResponse<Order>>;
   create(data: Partial<Order>): Promise<ApiResponse<Order>>;
   patchNote(id: string, note?: string): Promise<ApiResponse<string>>;
-  delete(id: string): Promise<ApiResponse<any>>;
+  delete(id: string): Promise<ApiResponse<unknown>>;
 };
 
 export default {

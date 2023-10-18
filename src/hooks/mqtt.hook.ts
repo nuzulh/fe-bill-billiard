@@ -25,7 +25,7 @@ export function useMqttClient(host: string | null, mqttOption?: mqtt.IClientOpti
       client.on("connect", () => {
         setStatus("connected");
       });
-      client.on("error", (err: any) => {
+      client.on("error", (err: unknown) => {
         console.error("Connection error: ", err);
         client.end();
       });
@@ -39,7 +39,7 @@ export function useMqttClient(host: string | null, mqttOption?: mqtt.IClientOpti
     } else {
       if (host) mqttConnect(host, mqttOption);
     }
-  }, [client, host]);
+  }, [client, host, mqttOption]);
 
   return { status, client, payload };
 }
