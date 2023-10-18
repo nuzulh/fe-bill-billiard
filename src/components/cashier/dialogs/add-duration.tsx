@@ -29,7 +29,7 @@ export default function AddDurationDialog({
     resolver: zodResolver(AddDurationSchema),
     defaultValues: {
       customer_name: table.order?.costumer_name,
-      duration: table.order?.duration,
+      duration: 1,
     }
   });
 
@@ -47,6 +47,7 @@ export default function AddDurationDialog({
     });
     else {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

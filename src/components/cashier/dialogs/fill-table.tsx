@@ -84,6 +84,7 @@ export default function FillTableDialog({
       });
     else {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }
@@ -312,7 +313,7 @@ export default function FillTableDialog({
                     <Input
                       value={formatCurrency(
                         orderItems.reduce((a, b) => a + b.price * b.quantity, 0) +
-                          table.price * (duration < 0 ? 0 : duration),
+                        table.price * (duration < 0 ? 0 : duration),
                       )}
                       disabled
                     />

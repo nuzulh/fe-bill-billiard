@@ -62,6 +62,7 @@ export default function OrderFnbDialog({
     });
     if (!result.error) {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

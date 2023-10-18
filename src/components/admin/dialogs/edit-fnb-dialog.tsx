@@ -57,6 +57,7 @@ export default function EditFnbDialog({
     });
     if (!result.error) {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

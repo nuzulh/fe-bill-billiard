@@ -11,12 +11,12 @@ import { ChevronDown } from "lucide-react";
 import React from "react";
 import { ChefDialogs } from "..";
 
-type ChefCardProps = {
+type OrderCardProps = {
   orderItem: OrderItem;
   nextAction: () => void;
 };
 
-export default function ChefCard({ orderItem, nextAction }: ChefCardProps) {
+export default function OrderCard({ orderItem, nextAction }: OrderCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (

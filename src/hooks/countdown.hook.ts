@@ -12,7 +12,7 @@ function getReturnValues(countDown: number) {
   const status: CountdownStatus =
     days + hours + minutes + seconds <= 0
       ? "inactive"
-      : days === 0 && hours === 0 && minutes <= 5
+      : days === 0 && hours === 0 && minutes < 5
         ? "emergency"
         : "active";
 

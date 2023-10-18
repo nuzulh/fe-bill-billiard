@@ -106,7 +106,7 @@ export default function TableCard({
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold mb-2">
-          {status === "active" || table.order?.life_time ? (
+          {/* {status === "active" || table.order?.life_time ? (
             table.order?.life_time
               ? "Sepuasnya"
               : (
@@ -116,7 +116,20 @@ export default function TableCard({
                   seconds={seconds}
                 />
               )
-          ) : "Kosong"}
+          ) : "Kosong"} */}
+          {
+            status !== "inactive"
+              ? table.order?.life_time
+                ? "Sepuasnya"
+                : (
+                  <Countdown
+                    hours={hours}
+                    minutes={minutes}
+                    seconds={seconds}
+                  />
+                )
+              : "Kosong"
+          }
         </div>
         <p className="text-xs">
           Harga Per-Jam{" "}

@@ -47,6 +47,7 @@ export default function EditTableDialog({
     });
     if (!result.error) {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

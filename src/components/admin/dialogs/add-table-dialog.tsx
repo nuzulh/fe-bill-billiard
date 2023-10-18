@@ -46,6 +46,7 @@ export default function AddTableDialog({
     });
     if (!result.error) {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

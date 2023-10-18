@@ -1,9 +1,9 @@
-import ChefCard from "./cards/chef-card";
+import OrderCard from "./cards/order-card";
 import ProcessDialog from "./dialogs/process-dialog";
 import FinishDialog from "./dialogs/finish-dialog";
 
 export const ChefCards = {
-  ChefCard,
+  OrderCard,
 };
 
 export const ChefDialogs = {

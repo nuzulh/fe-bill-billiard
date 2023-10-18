@@ -1,4 +1,4 @@
-import { format, startOfDay } from "date-fns";
+import { startOfDay } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -7,19 +7,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { useState } from "react";
 
 export function DatePicker({
   onDateChange,
 }: {
-  onDateChange: (date: Date | undefined) => void;
+  onDateChange: (date: Date) => void;
 }) {
-  const [date, setDate] = useState<Date | undefined>(startOfDay(new Date()));
+  const [date, setDate] = useState<Date>(startOfDay(new Date()));
 
-  const handleDateChange = (date: Date | undefined) => {
-    setDate(startOfDay(date ?? new Date()));
-    onDateChange(startOfDay(date ?? new Date()));
+  const handleDateChange = (date: Date) => {
+    setDate(startOfDay(date));
+    onDateChange(startOfDay(date));
   };
 
   return (
@@ -33,14 +33,14 @@ export function DatePicker({
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pilih tanggal</span>}
+          {formatDate(date)}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           selected={date}
-          onSelect={handleDateChange}
+          onSelect={(x) => handleDateChange(x ?? new Date())}
           initialFocus
         />
       </PopoverContent>

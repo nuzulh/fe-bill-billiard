@@ -41,6 +41,7 @@ export default function PayOrderDialog({
     if (!result.error) {
       setIsOpen(false);
       onPrint(order);
+      form.reset();
       nextAction();
     }
   }

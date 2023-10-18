@@ -47,12 +47,12 @@ export const orderColumns = (
       cell: ({ row }) => row.original.table ? (
         <div
           className={
-            !row.original.stopped
+            row.original.stopped
               ? "text-red-500"
               : "text-green-500"
           }
         >
-          {!row.original.stopped ? "Tidak" : "Ya"}
+          {row.original.stopped ? "Tidak" : "Ya"}
         </div>
       ) : "-",
     },

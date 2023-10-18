@@ -78,6 +78,7 @@ export default function EditFnbOrderDialog({
     });
     else {
       setIsOpen(false);
+      form.reset();
       nextAction();
     }
   }

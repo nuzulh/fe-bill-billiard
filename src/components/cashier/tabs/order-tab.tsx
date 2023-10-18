@@ -5,9 +5,15 @@ import { Services } from "@/services";
 import { Order } from "@/types";
 import React from "react";
 import { DatePicker } from "@/components/date-picker";
+import { formatDate } from "@/lib";
 
 export default function OrderTab() {
   const [orders, setOrders] = React.useState<Order[] | null>(null);
+  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
+  const filteredOrders = React.useMemo(
+    () => orders?.filter((x) => formatDate(x.created_at) === formatDate(selectedDate)) || [],
+    [orders, selectedDate]
+  );
 
   async function fetchOrders() {
     const result = await Services.orderService.getAll();
@@ -29,11 +35,11 @@ export default function OrderTab() {
   return (
     <DataTable
       columns={CashierColumns.orderColumns(fetchOrders)}
-      data={orders}
+      data={filteredOrders}
       filter="costumer_name"
       filterPlaceHolder="nama kostumer..."
       actionElement={
-        <DatePicker onDateChange={(date) => console.log(date)} />
+        <DatePicker onDateChange={(date) => setSelectedDate(date)} />
       }
     />
   );
