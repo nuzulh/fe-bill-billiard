@@ -31,16 +31,19 @@ export default function InvoiceDialog({
             <p className="text-sm">Nama Pelanggan:</p>
             <p className="text-sm font-semibold">{order.costumer_name}</p>
           </div>
+          <hr />
           {order.table && (
             <>
               <div className="flex justify-between items-center">
                 <p className="text-sm">Meja:</p>
                 <p className="text-sm font-semibold">{order.table}</p>
               </div>
+              <hr />
               <div className="flex justify-between items-center">
                 <p className="text-sm">Durasi:</p>
                 <p className="text-sm font-semibold">{formatDuration(order.duration)}</p>
               </div>
+              <hr />
             </>
           )}
           {order.order_items.length > 0 && order.order_items.map((x) => (
@@ -49,13 +52,15 @@ export default function InvoiceDialog({
               <p className="text-sm font-semibold">{x.quantity}x</p>
             </div>
           ))}
+          <hr />
           <p className="text-sm">Catatan:</p>
-          <p className="text-sm">{order.note ?? "-"}</p>
+          <em className="text-sm">{order.note ?? "-"}</em>
           <hr />
           <div className="flex justify-between items-center">
             <p className="text-sm font-semibold">Harga:</p>
             <p className="text-sm font-bold">{formatCurrency(order.price)}</p>
           </div>
+          <hr />
         </div>
         <DialogFooter>
           <Button onClick={() => onPrint(order)}>

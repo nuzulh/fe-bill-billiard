@@ -8,7 +8,7 @@ import { PayOrderSchema, formatCurrency, formatDuration, onPrint } from "@/lib";
 import { Services } from "@/services";
 import { Order } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Printer } from "lucide-react";
+import { CircleDollarSign, Printer } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -24,10 +24,12 @@ export default function PayOrderDialog({
 }: PayOrderDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const form = useForm<z.infer<typeof PayOrderSchema>>({
     resolver: zodResolver(PayOrderSchema),
   });
+  const note = form.watch("note");
 
   async function onSubmit(val: z.infer<typeof PayOrderSchema>) {
     setLoading(true);
@@ -38,12 +40,7 @@ export default function PayOrderDialog({
       description: result.message ?? "Bayar orderan berhasil",
       variant: result.error ? "destructive" : "default",
     });
-    if (!result.error) {
-      setIsOpen(false);
-      onPrint(order);
-      form.reset();
-      nextAction();
-    }
+    if (!result.error) setIsSubmitted(true);
   }
 
   return (
@@ -63,16 +60,19 @@ export default function PayOrderDialog({
             <p className="text-sm">Nama Pelanggan:</p>
             <p className="text-sm font-semibold">{order.costumer_name}</p>
           </div>
+          <hr />
           {order.table && (
             <>
               <div className="flex justify-between items-center">
                 <p className="text-sm">Meja:</p>
                 <p className="text-sm font-semibold">{order.table}</p>
               </div>
+              <hr />
               <div className="flex justify-between items-center">
                 <p className="text-sm">Durasi:</p>
                 <p className="text-sm font-semibold">{formatDuration(order.duration)}</p>
               </div>
+              <hr />
             </>
           )}
           {order.order_items.length > 0 && order.order_items.map((x) => (
@@ -86,6 +86,7 @@ export default function PayOrderDialog({
             <p className="text-sm font-semibold">Harga:</p>
             <p className="text-sm font-bold">{formatCurrency(order.price)}</p>
           </div>
+          <hr />
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
@@ -97,6 +98,7 @@ export default function PayOrderDialog({
                   <FormItem>
                     <FormControl>
                       <Textarea
+                        disabled={isSubmitted}
                         placeholder="Catatan tambahan"
                         className="resize-none mt-5"
                         {...field}
@@ -107,9 +109,24 @@ export default function PayOrderDialog({
                 )}
               />
             </div>
-            <Button disabled={loading} className="w-full mt-6" type="submit">
-              {loading ? <Spinner /> : "Bayar dan Cetak"}
-            </Button>
+            {isSubmitted ? (
+              <Button
+                className="w-full mt-6"
+                type="button"
+                onClick={() => {
+                  onPrint({ ...order, note: note });
+                  nextAction();
+                }}
+              >
+                <Printer className="mr-2 h-4 w-4" />
+                <span>Cetak</span>
+              </Button>
+            ) : (
+              <Button disabled={loading} className="w-full mt-6" type="submit">
+                <CircleDollarSign className="mr-2 h-4 w-4" />
+                <span>{loading ? <Spinner /> : "Bayar"}</span>
+              </Button>
+            )}
           </form>
         </Form>
       </DialogContent>

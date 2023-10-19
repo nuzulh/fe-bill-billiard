@@ -45,10 +45,10 @@ export default function EditFnbOrderDialog({
           fnb_id: fnbs.find((f) => f.name === x.fnb?.name)?.id,
           name: x.fnb?.name,
           price: x.fnb?.price,
-          total_price: table.order?.order_items.reduce(
+          total_price: table.order?.order_items?.reduce(
             (a, b) => a + b.fnb?.price! || 0,
             0
-          ),
+          ) || 0,
           quantity: x.quantity,
         })
       ),
