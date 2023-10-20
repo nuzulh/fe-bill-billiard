@@ -1,15 +1,19 @@
-import { Fnb, Table } from "@/types";
-import React from "react";
-import { ChevronDown } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { CashierDialogs } from "..";
 import { Countdown } from "@/components";
-import { useCountdown } from "@/hooks";
-import { Services } from "@/services";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
+import { useCountdown } from "@/hooks";
 import { formatCurrency } from "@/lib";
+import { Services } from "@/services";
+import { Fnb, Table } from "@/types";
+import { ChevronDown } from "lucide-react";
+import React from "react";
+import { CashierDialogs } from "..";
 
 type TableCardProps = {
   table: Table;
@@ -17,29 +21,21 @@ type TableCardProps = {
   nextAction: () => void;
 };
 
-export default function TableCard({
-  table,
-  fnbs,
-  nextAction,
-}: TableCardProps) {
+export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const {
-    hours,
-    minutes,
-    seconds,
-    status,
-  } = useCountdown(
+  const { hours, minutes, seconds, status } = useCountdown(
     table.order?.created_at || new Date(),
-    table.order?.duration || 0
+    table.order?.duration || 0,
   );
 
   async function stopTable() {
     const result = await Services.tableService.stop(table.id, "done");
-    if (result.error) toast({
-      title: "Gagal",
-      description: result.message,
-      variant: "destructive",
-    });
+    if (result.error)
+      toast({
+        title: "Gagal",
+        description: result.message,
+        variant: "destructive",
+      });
     else {
       setIsOpen(false);
       nextAction();
@@ -47,11 +43,7 @@ export default function TableCard({
   }
 
   React.useEffect(() => {
-    if (
-      table.order &&
-      !table.order.life_time &&
-      status === "inactive"
-    ) stopTable();
+    if (table.order && !table.order.life_time && status === "inactive") stopTable();
   }, [status]);
 
   return (
@@ -60,8 +52,8 @@ export default function TableCard({
         status === "active" || table.order?.life_time
           ? "bg-red-500"
           : status === "emergency"
-            ? "bg-amber-500"
-            : "bg-green-500"
+          ? "bg-amber-500"
+          : "bg-green-500"
       }
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -89,10 +81,7 @@ export default function TableCard({
                     nextAction={nextAction}
                   />
                 )}
-                <CashierDialogs.StopTableDialog
-                  table={table}
-                  nextAction={nextAction}
-                />
+                <CashierDialogs.StopTableDialog table={table} nextAction={nextAction} />
               </>
             ) : (
               <CashierDialogs.FillTableDialog
@@ -117,24 +106,15 @@ export default function TableCard({
                 />
               )
           ) : "Kosong"} */}
-          {
-            status !== "inactive"
-              ? table.order?.life_time
-                ? "Sepuasnya"
-                : (
-                  <Countdown
-                    hours={hours}
-                    minutes={minutes}
-                    seconds={seconds}
-                  />
-                )
-              : "Kosong"
-          }
+          {table.order?.life_time ? (
+            "Sepuasnya"
+          ) : status !== "inactive" ? (
+            <Countdown hours={hours} minutes={minutes} seconds={seconds} />
+          ) : (
+            "Kosong"
+          )}
         </div>
-        <p className="text-xs">
-          Harga Per-Jam{" "}
-          {formatCurrency(table.price)}
-        </p>
+        <p className="text-xs">Harga Per-Jam {formatCurrency(table.price)}</p>
       </CardContent>
     </Card>
   );
