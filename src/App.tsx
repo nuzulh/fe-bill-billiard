@@ -20,7 +20,7 @@ export default function App() {
       appStorage.remove("token");
       navigate("/auth/login", { replace: true });
     }
-  }, []);
+  }, [authUser, navigate]);
 
   return (
     <Routes>
@@ -41,6 +41,7 @@ export default function App() {
           <Route path="fnb" element={<AdminPages.FnbPage />} />
           <Route path="table" element={<AdminPages.TablePage />} />
           <Route path="order" element={<AdminPages.OrderPage />} />
+          <Route path="user" element={<AdminPages.UserPage />} />
         </Route>
 
         <Route path="/cashier">

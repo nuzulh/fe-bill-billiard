@@ -158,6 +158,18 @@ export const AddFnbSchema = z.object({
   active: z.enum(["true", "false"]).default("true"),
 });
 
+
 export const PayOrderSchema = z.object({
   note: z.string().optional(),
+});
+
+
+export const AddUserSchema = z.object({
+  name: z.string().min(1, "Nama pengguna harus diisi"),
+  email: z.string().min(1, "Email harus diisi").email("Email tidak valid"),
+  password: z
+    .string()
+    .min(1, "Password harus diisi")
+    .min(8, "Password minimal 8 karakter"),
+  role: z.enum(["admin", "cashier", "chef", "user"]).default("user"),
 });
