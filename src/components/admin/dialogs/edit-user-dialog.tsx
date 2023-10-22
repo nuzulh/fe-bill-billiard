@@ -112,7 +112,7 @@ export default function EditUserDialog({
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
-                        defaultValue="user"
+                        defaultValue={user.role}
                         className="flex flex-col space-y-1"
                       >
                         {Object.values(UserRole).map((role, index) => (
