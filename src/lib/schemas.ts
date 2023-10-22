@@ -92,15 +92,15 @@ export const EditOrderSchema = z.object({
           .min(1, "Qty harus diisi"),
       }),
     )
-    .refine(
-      items =>
-        items.find(item => items.filter(i => i.name === item.name).length > 1) ===
-        undefined,
-      {
-        message: "Gunakan qty untuk item yang sama",
-        path: [0, "name"],
-      },
-    ),
+  // .refine(
+  //   items =>
+  //     items.find(item => items.filter(i => i.name === item.name).length > 1) ===
+  //     undefined,
+  //   {
+  //     message: "Gunakan qty untuk item yang sama",
+  //     path: [0, "name"],
+  //   },
+  // ),
 });
 
 export const AddDurationSchema = z.object({

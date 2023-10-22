@@ -58,7 +58,7 @@ function createInvoicePdf(order: Order) {
 
 export function onPrint(order: Order) {
   const pdf = createInvoicePdf(order);
-  pdf.autoPrint();
+  // pdf.autoPrint();
   window.open(pdf.output("bloburl"));
 }
 

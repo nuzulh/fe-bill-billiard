@@ -66,8 +66,9 @@ export default function EditFnbOrderDialog({
         name: x.fnb?.name,
         price: x.fnb?.price,
         total_price:
-          table.order?.order_items?.reduce((a, b) => a + b.fnb?.price! || 0, 0) || 0,
+          table.order?.order_items?.reduce((a, b) => a + b.fnb?.price ?? 0, 0) || 0,
         quantity: x.quantity,
+        status: x.status,
       })),
       total_price: table.order?.price,
       life_time: table.order?.life_time,
@@ -96,6 +97,12 @@ export default function EditFnbOrderDialog({
       form.reset();
       nextAction();
     }
+  }
+
+  function checkFnbStatus(name: string): boolean {
+    return form.getValues(name)
+      ? form.getValues(name) !== "pending"
+      : false;
   }
 
   return (
@@ -191,7 +198,7 @@ export default function EditFnbOrderDialog({
                           <FormItem className="flex flex-col">
                             <FormMessage />
                             <Popover>
-                              <PopoverTrigger asChild>
+                              <PopoverTrigger disabled={checkFnbStatus(`order_items.${index}.status`)} asChild>
                                 <FormControl>
                                   <Button
                                     variant="outline"
@@ -204,8 +211,8 @@ export default function EditFnbOrderDialog({
                                     {field.value
                                       ? fnbs.find(fnb => fnb.name === field.value)?.name
                                       : table.order?.order_items.find(
-                                          x => x.fnb?.name === field.value,
-                                        )?.fnb?.name || "Pilih F&B"}
+                                        x => x.fnb?.name === field.value,
+                                      )?.fnb?.name || "Pilih F&B"}
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                   </Button>
                                 </FormControl>
@@ -270,13 +277,14 @@ export default function EditFnbOrderDialog({
                           <FormItem>
                             <FormControl>
                               <Input
+                                disabled={checkFnbStatus(`order_items.${index}.status`)}
                                 className="w-10"
                                 {...field}
                                 {...form.register(`order_items.${index}.quantity`, {
                                   setValueAs: value => Number(value) || "",
                                   min: 1,
                                   onChange(event) {
-                                    let price = form.getValues(
+                                    const price = form.getValues(
                                       `order_items.${index}.price`,
                                     );
                                     form.setValue(
@@ -293,6 +301,7 @@ export default function EditFnbOrderDialog({
                       />
                     </div>
                     <Button
+                      disabled={checkFnbStatus(`order_items.${index}.status`)}
                       type="button"
                       variant="outline"
                       size="sm"
@@ -326,9 +335,9 @@ export default function EditFnbOrderDialog({
                     <Input
                       value={formatCurrency(
                         orderItems.reduce((a, b) => a + b.price * b.quantity, 0) +
-                          table.price * (duration < 0 ? 0 : duration) ||
-                          table.order?.price ||
-                          0,
+                        table.price * (duration < 0 ? 0 : duration) ||
+                        table.order?.price ||
+                        0,
                       )}
                       disabled
                     />

@@ -24,7 +24,6 @@ export default function PayOrderDialog({
 }: PayOrderDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const form = useForm<z.infer<typeof PayOrderSchema>>({
     resolver: zodResolver(PayOrderSchema),
@@ -40,7 +39,10 @@ export default function PayOrderDialog({
       description: result.message ?? "Bayar orderan berhasil",
       variant: result.error ? "destructive" : "default",
     });
-    if (!result.error) setIsSubmitted(true);
+    if (!result.error) {
+      onPrint({ ...order, note: note });
+      nextAction();
+    }
   }
 
   return (
@@ -98,7 +100,6 @@ export default function PayOrderDialog({
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        disabled={isSubmitted}
                         placeholder="Catatan tambahan"
                         className="resize-none mt-5"
                         {...field}
@@ -109,24 +110,10 @@ export default function PayOrderDialog({
                 )}
               />
             </div>
-            {isSubmitted ? (
-              <Button
-                className="w-full mt-6"
-                type="button"
-                onClick={() => {
-                  onPrint({ ...order, note: note });
-                  nextAction();
-                }}
-              >
-                <Printer className="mr-2 h-4 w-4" />
-                <span>Cetak</span>
-              </Button>
-            ) : (
-              <Button disabled={loading} className="w-full mt-6" type="submit">
-                <CircleDollarSign className="mr-2 h-4 w-4" />
-                <span>{loading ? <Spinner /> : "Bayar"}</span>
-              </Button>
-            )}
+            <Button disabled={loading} className="w-full mt-6" type="submit">
+              <CircleDollarSign className="mr-2 h-4 w-4" />
+              <span>{loading ? <Spinner /> : "Bayar & Cetak"}</span>
+            </Button>
           </form>
         </Form>
       </DialogContent>
