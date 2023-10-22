@@ -32,10 +32,10 @@ export const userColumns = (
             user={row.original}
             nextAction={nextAction}
           />
-          <AdminDialogs.DeleteUserDialog
+          {/* <AdminDialogs.DeleteUserDialog
             user={row.original}
             nextAction={nextAction}
-          />
+          /> */}
         </div>
       ),
     },
