@@ -66,7 +66,7 @@ export default function EditFnbOrderDialog({
         name: x.fnb?.name,
         price: x.fnb?.price,
         total_price:
-          table.order?.order_items?.reduce((a, b) => a + b.fnb?.price ?? 0, 0) || 0,
+          table.order?.order_items?.reduce((a, b) => a + b.fnb?.price! ?? 0, 0) || 0,
         quantity: x.quantity,
         status: x.status,
       })),
@@ -100,8 +100,8 @@ export default function EditFnbOrderDialog({
   }
 
   function checkFnbStatus(name: string): boolean {
-    return form.getValues(name)
-      ? form.getValues(name) !== "pending"
+    return form.getValues(name as never)
+      ? form.getValues(name as never) !== "pending"
       : false;
   }
 
