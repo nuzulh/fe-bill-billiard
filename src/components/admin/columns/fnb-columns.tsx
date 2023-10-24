@@ -62,6 +62,11 @@ export const fnbColumns = (
     {
       accessorKey: "category",
       header: "Kategori",
+      cell: ({ row }) => row.original.category === "food"
+        ? "Makanan"
+        : row.original.category === "beverage"
+          ? "Minuman"
+          : "Lainnya"
     },
     {
       accessorKey: "active",
