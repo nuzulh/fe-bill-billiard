@@ -26,8 +26,9 @@ function createInvoicePdf(order: Order) {
     doc.text(order.table, width - 5, 23, { align: "right" });
     doc.text("Durasi", 5, 26);
     doc.text(formatDuration(order.duration), width - 5, 26, { align: "right" });
-    posY = 29;
+    posY = 26;
   }
+  posY += 3;
 
   if (order.order_items.length > 0) {
     doc.text("----------F&B----------", width / 2 - (doc.getTextWidth("----------F&B----------") / 2), posY);
