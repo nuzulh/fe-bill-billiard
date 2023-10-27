@@ -75,3 +75,44 @@ export type MqttHost = {
   username: string | null;
   password: string | null;
 };
+
+export type GroupOrder = {
+  month: Date;
+  total_paid_order_table: number;
+  total_paid_order_item: number;
+  total_paid_price: number;
+  total_unpaid_order_table: number;
+  total_unpaid_order_item: number;
+  total_unpaid_price: number;
+};
+
+export type TableOrder = {
+  id: string;
+  duration: number;
+  stoped_at: Date;
+  life_time: boolean;
+  used_table: Table & { created_at: Date; };
+};
+
+export type OverviewOrder = {
+  created_at: Date;
+  id: string;
+  costumer_name: string;
+  paid: boolean;
+  price: number;
+  note: string | null;
+  table_order: TableOrder | null;
+  order_items: Array<OrderItem & { created_at: Date; }>;
+};
+
+export type OverviewUser = {
+  role: UserRole;
+  count: number;
+};
+
+export type Overview = {
+  groupOrders: GroupOrder[];
+  paidOrders: OverviewOrder[];
+  unPaidOrders: OverviewOrder[];
+  users: OverviewUser[];
+};

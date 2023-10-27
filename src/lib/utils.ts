@@ -51,3 +51,11 @@ export function formatDuration(num: number) {
     return `${num * 60} Menit`;
   return `${num} Jam`;
 }
+
+export function parseInitial(name: string) {
+  return name.split(" ")[1] === undefined
+    ? name[0] +
+    name[name.length - 1]
+    : name.split(" ")[0][0] +
+    name.split(" ")[1][0];
+}

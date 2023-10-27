@@ -4,6 +4,7 @@ import mqttHostService from "./mqtt-host.service";
 import orderService from "./order.service";
 import tableService from "./table.service";
 import userService from "./user.service";
+import overviewService from "./overview.service";
 
 export const Services = {
   userService,
@@ -12,4 +13,5 @@ export const Services = {
   orderService,
   chefService,
   mqttHostService,
+  overviewService,
 };

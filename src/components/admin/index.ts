@@ -11,6 +11,9 @@ import DeleteFnbDialog from "./dialogs/delete-fnb-dialog";
 import AddUserDialog from "./dialogs/add-user-dialog";
 import EditUserDialog from "./dialogs/edit-user-dialog";
 import DeleteUserDialog from "./dialogs/delete-user-dialog";
+import OverviewCards from "./cards/overview-cards";
+import ChartsCard from "./cards/charts-card";
+import UnpaidOrdersCard from "./cards/unpaid-orders-card";
 
 export const AdminColumns = {
   fnbColumns,
@@ -29,4 +32,10 @@ export const AdminDialogs = {
   AddUserDialog,
   EditUserDialog,
   DeleteUserDialog,
+};
+
+export const AdminCards = {
+  OverviewCards,
+  ChartsCard,
+  UnpaidOrdersCard,
 };
