@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDate } from "@/lib";
 import { GroupOrder } from "@/types";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
@@ -31,7 +30,11 @@ export default function ChartsCard({
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="month"
-              tickFormatter={(value) => formatDate(value)}
+              tickFormatter={(value) =>
+                new Intl.DateTimeFormat("id-ID", {
+                  month: "short",
+                }).format(new Date(value))
+              }
             />
             <YAxis
               stroke="#888888"
