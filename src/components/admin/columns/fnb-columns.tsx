@@ -6,95 +6,85 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Beer, Sandwich, UtensilsCrossed } from "lucide-react";
 import { AdminDialogs } from "..";
 
-export const fnbColumns = (
-  nextAction: () => void
-): ColumnDef<Fnb>[] => [
-    {
-      accessorKey: "image",
-      header: "Gambar",
-      cell: ({ row }) => {
-        const categoryIdLang = {
-          food: <Sandwich />,
-          beverage: <Beer />,
-          other: <UtensilsCrossed />,
-        };
-        return row.original.image ? (
-          <div className="flex items-center justify-center">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={row.original.image} alt="img" />
-              <AvatarFallback>
-                {categoryIdLang[row.original.category]}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            {categoryIdLang[row.original.category]}
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "name",
-      header: "Nama Produk",
-    },
-    {
-      accessorKey: "price",
-      header: ({ column }) => (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Harga
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      ),
-      cell: ({ row }) => (
+export const fnbColumns = (nextAction: () => void): ColumnDef<Fnb>[] => [
+  {
+    accessorKey: "image",
+    header: "Gambar",
+    cell: ({ row }) => {
+      const categoryIdLang = {
+        food: <Sandwich />,
+        beverage: <Beer />,
+        other: <UtensilsCrossed />,
+      };
+      return row.original.image ? (
         <div className="flex items-center justify-center">
-          <span>{formatCurrency(row.original.price)}</span>
+          <Avatar className="h-10 w-10">
+            <AvatarImage src={row.original.image} alt="img" />
+            <AvatarFallback>{categoryIdLang[row.original.category]}</AvatarFallback>
+          </Avatar>
         </div>
-      ),
+      ) : (
+        <div className="flex items-center justify-center">
+          {categoryIdLang[row.original.category]}
+        </div>
+      );
     },
-    {
-      accessorKey: "stock",
-      header: "Stok",
-    },
-    {
-      accessorKey: "category",
-      header: "Kategori",
-      cell: ({ row }) => row.original.category === "food"
+  },
+  {
+    accessorKey: "name",
+    header: "Nama Produk",
+  },
+  {
+    accessorKey: "price",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Harga
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        <span>{formatCurrency(row.original.price)}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "stock",
+    header: "Stok",
+  },
+  {
+    accessorKey: "category",
+    header: "Kategori",
+    cell: ({ row }) =>
+      row.original.category === "food"
         ? "Makanan"
         : row.original.category === "beverage"
-          ? "Minuman"
-          : "Lainnya"
-    },
-    {
-      accessorKey: "active",
-      header: "Dipasarkan?",
-      cell: ({ row }) => (
-        <div className="flex items-center justify-center">
-          {row.original.active ? (
-            <span className="text-green-500">Ya</span>
-          ) : (
-            <span className="text-red-500">Tidak</span>
-          )}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "id",
-      header: "Aksi",
-      cell: ({ row }) => (
-        <div className="flex items-center justify-center gap-3">
-          <AdminDialogs.EditFnbDialog
-            fnb={row.original}
-            nextAction={nextAction}
-          />
-          <AdminDialogs.DeleteFnbDialog
-            fnb={row.original}
-            nextAction={nextAction}
-          />
-        </div>
-      ),
-    },
-  ];
+        ? "Minuman"
+        : "Lainnya",
+  },
+  {
+    accessorKey: "active",
+    header: "Dipasarkan?",
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        {row.original.active ? (
+          <span className="text-green-500">Ya</span>
+        ) : (
+          <span className="text-red-500">Tidak</span>
+        )}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "id",
+    header: "Aksi",
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center gap-3">
+        <AdminDialogs.EditFnbDialog fnb={row.original} nextAction={nextAction} />
+      </div>
+    ),
+  },
+];
