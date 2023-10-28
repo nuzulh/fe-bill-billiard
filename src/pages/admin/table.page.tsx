@@ -10,7 +10,7 @@ export default function TablePage() {
   const [tables, setTables] = React.useState<Table[] | null>(null);
 
   async function fetchTables() {
-    const result = await Services.tableService.getAll();
+    const result = await Services.tableService.getAll(true);
     if (result.error)
       toast({
         title: "Gagal",

@@ -1,7 +1,21 @@
 import { Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
@@ -18,10 +32,7 @@ type EditTableDialogProps = {
   nextAction: () => void;
 };
 
-export default function EditTableDialog({
-  table,
-  nextAction,
-}: EditTableDialogProps) {
+export default function EditTableDialog({ table, nextAction }: EditTableDialogProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
@@ -60,9 +71,7 @@ export default function EditTableDialog({
       <DialogContent className="max-w-[400px] sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Meja Billiard</DialogTitle>
-          <DialogDescription>
-            Pastikan data yang dikirim sudah benar
-          </DialogDescription>
+          <DialogDescription>Pastikan data yang dikirim sudah benar</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
@@ -118,7 +127,9 @@ export default function EditTableDialog({
                     <FormLabel>Meja Bisa Digunakan?</FormLabel>
                     <FormControl>
                       <RadioGroup
-                        onValueChange={field.onChange}
+                        onValueChange={val => {
+                          val == "true" ? field.onChange(true) : field.onChange(false);
+                        }}
                         defaultValue={String(field.value) || "true"}
                         className="flex flex-col space-y-1"
                       >
@@ -132,9 +143,7 @@ export default function EditTableDialog({
                           <FormControl>
                             <RadioGroupItem value="false" />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            Tidak Bisa
-                          </FormLabel>
+                          <FormLabel className="font-normal">Tidak Bisa</FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>

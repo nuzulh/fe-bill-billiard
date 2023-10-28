@@ -10,7 +10,7 @@ export default function FnbPage() {
   const [fnbs, setFnbs] = React.useState<Fnb[] | null>(null);
 
   async function fetchFnbs() {
-    const result = await Services.fnbService.getAll();
+    const result = await Services.fnbService.getAll(true);
     if (result.error)
       toast({
         title: "Gagal",

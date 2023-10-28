@@ -11,25 +11,24 @@ export default function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentDate = new Date();
-  const fromDate = searchParams.get("from")
-    ?? new Date(
-      new Date().setDate(new Date().getDate() - 7)
-    ).toISOString();
-  const toDate = searchParams.get("to")
-    ?? currentDate.toISOString();
+  const fromDate =
+    searchParams.get("from") ??
+    new Date(new Date().setDate(new Date().getDate() - 7)).toISOString();
+  const toDate = searchParams.get("to") ?? currentDate.toISOString();
 
   async function fetchOverview() {
     const result = await Services.overviewService.get(fromDate, toDate);
-    if (result.error) toast({
-      title: "Gagal",
-      description: result.message,
-      variant: "destructive",
-    });
+    if (result.error)
+      toast({
+        title: "Gagal",
+        description: result.message,
+        variant: "destructive",
+      });
     else setOverview(result.data);
   }
 
   React.useEffect(() => {
-    setSearchParams((prev) => {
+    setSearchParams(prev => {
       prev.set("from", fromDate);
       prev.set("to", toDate);
       return prev;
@@ -41,20 +40,22 @@ export default function DashboardPage() {
   if (!overview) return <Loading />;
 
   return (
-    <div className="flex-1 space-y-4 py-8 pt-6">
+    <div className="container flex-1 space-y-4 py-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
         <div className="flex items-center space-x-2">
           <CalendarDateRangePicker
             date={{
               from: new Date(fromDate),
-              to: new Date(toDate)
+              to: new Date(toDate),
             }}
-            setDate={(range) => setSearchParams((prev) => {
-              prev.set("from", range?.from?.toISOString() ?? fromDate);
-              prev.set("to", range?.to?.toISOString() ?? toDate);
-              return prev;
-            })}
+            setDate={range =>
+              setSearchParams(prev => {
+                prev.set("from", range?.from?.toISOString() ?? fromDate);
+                prev.set("to", range?.to?.toISOString() ?? toDate);
+                return prev;
+              })
+            }
           />
         </div>
       </div>
