@@ -1,8 +1,9 @@
+import { InvoicePrint } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { formatCurrency, formatDuration, onDownload, onPrint } from "@/lib";
+import { onPrintPng } from "@/lib";
 import { Order } from "@/types";
-import { Download, FileText, Printer } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import React from "react";
 
 type InvoiceDialogProps = {
@@ -26,7 +27,7 @@ export default function InvoiceDialog({
         <DialogHeader>
           <DialogTitle>Invoice</DialogTitle>
         </DialogHeader>
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <div className="flex justify-between items-center">
             <p className="text-sm">Nama Pelanggan:</p>
             <p className="text-sm font-semibold">{order.costumer_name}</p>
@@ -61,13 +62,14 @@ export default function InvoiceDialog({
             <p className="text-sm font-bold">{formatCurrency(order.price)}</p>
           </div>
           <hr />
-        </div>
+        </div> */}
+        <InvoicePrint order={order} />
         <DialogFooter>
-          <Button onClick={() => onPrint(order)}>
+          {/* <Button onClick={() => onPrint(order)}>
             <Printer className="mr-2 h-4 w-4" />
             <span>Cetak</span>
-          </Button>
-          <Button onClick={() => onDownload(order)}>
+          </Button> */}
+          <Button onClick={() => onPrintPng(`INVOICE_${order.id}.png`)}>
             <Download className="mr-2 h-4 w-4" />
             <span>Unduh</span>
           </Button>

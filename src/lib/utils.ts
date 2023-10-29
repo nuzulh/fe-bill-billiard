@@ -48,8 +48,8 @@ export function formatTime(date: Date) {
 
 export function formatDuration(num: number) {
   if (`${num}`.startsWith("0"))
-    return `${num * 60} Menit`;
-  return `${num} Jam`;
+    return `${(num * 60).toFixed(0)} Menit`;
+  return `${num.toFixed(0)} Jam`;
 }
 
 export function parseInitial(name: string) {

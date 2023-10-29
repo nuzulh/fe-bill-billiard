@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
-import logoDark from "../assets/logo-dark.png";
+import logo from "../assets/images/logo.png";
+import logoDark from "../assets/images/logo-dark.png";
 import { ModeToggle } from "./mode-toggle";
 import { DecodedToken } from "@/hooks";
 import { Button } from "./ui/button";
@@ -20,6 +20,7 @@ export function AppLayout({ authUser }: AppLayoutProps) {
 
   React.useEffect(() => {
     validateRole(authUser, navigate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,0 +1,16 @@
+@media print {
+  @page {
+    size: A4;
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    visibility: hidden;
+  }
+  #order-print-area {
+    visibility: visible;
+    /* position: absolute;
+    left: 0;
+    top: 0; */
+  }
+}

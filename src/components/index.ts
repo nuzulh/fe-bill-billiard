@@ -8,3 +8,4 @@ export * from "./dialog-container";
 export * from "./loading";
 export * from "./data-table";
 export * from "./date-range-picker";
+export * from "./invoice-print";
