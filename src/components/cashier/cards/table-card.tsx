@@ -78,21 +78,36 @@ export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
                 <CashierDialogs.EditFnbOrderDialog
                   table={table}
                   fnbs={fnbs}
-                  nextAction={nextAction}
+                  nextAction={() => {
+                    setIsOpen(false);
+                    nextAction();
+                  }}
                 />
                 {table.order?.life_time ? null : (
                   <CashierDialogs.AddDurationDialog
                     table={table}
-                    nextAction={nextAction}
+                    nextAction={() => {
+                      setIsOpen(false);
+                      nextAction();
+                    }}
                   />
                 )}
-                <CashierDialogs.StopTableDialog table={table} nextAction={nextAction} />
+                <CashierDialogs.StopTableDialog
+                  table={table}
+                  nextAction={() => {
+                    setIsOpen(false);
+                    nextAction();
+                  }}
+                />
               </>
             ) : (
               <CashierDialogs.FillTableDialog
                 table={table}
                 fnbs={fnbs}
-                nextAction={nextAction}
+                nextAction={() => {
+                  setIsOpen(false);
+                  nextAction();
+                }}
               />
             )}
           </DropdownMenuContent>

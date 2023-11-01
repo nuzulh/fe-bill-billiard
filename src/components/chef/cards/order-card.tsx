@@ -36,9 +36,21 @@ export default function OrderCard({ orderItem, nextAction }: OrderCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-primary text-primary-foreground">
             {orderItem.status === "pending" ? (
-              <ChefDialogs.ProcessDialog orderItem={orderItem} nextAction={nextAction} />
+              <ChefDialogs.ProcessDialog
+                orderItem={orderItem}
+                nextAction={() => {
+                  setIsOpen(false);
+                  nextAction();
+                }}
+              />
             ) : (
-              <ChefDialogs.FinishDialog orderItem={orderItem} nextAction={nextAction} />
+              <ChefDialogs.FinishDialog
+                orderItem={orderItem}
+                nextAction={() => {
+                  setIsOpen(false);
+                  nextAction();
+                }}
+              />
             )}
           </DropdownMenuContent>
         </DropdownMenu>
