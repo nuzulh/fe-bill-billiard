@@ -16,6 +16,7 @@ type TableService = {
   ): Promise<ApiResponse<unknown>>;
   addDuration(tableId: number, duration: number): Promise<ApiResponse<unknown>>;
   stop(id: number, reason: "stop" | "done"): Promise<ApiResponse<unknown>>;
+  reminder(id: number): Promise<ApiResponse<unknown>>;
 };
 
 export default {
@@ -31,4 +32,6 @@ export default {
     await API.put(`/table-action/add-duration/${id}`, { duration }),
   stop: async (id, reason) =>
     await API.post(`/table-action/stop/${id}?reason=${reason}`, null),
+  reminder: async (id) =>
+    await API.get(`/table-action/reminder/${id}`),
 } as TableService;

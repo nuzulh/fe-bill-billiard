@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Countdown } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,7 +44,11 @@ export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
   }
 
   React.useEffect(() => {
-    if (table.order && !table.order.life_time && status === "inactive") stopTable();
+    if (table.order) {
+      if (!table.order.life_time && status === "inactive") stopTable();
+      if (!table.order.life_time && status === "emergency")
+        Services.tableService.reminder(table.id);
+    }
   }, [status]);
 
   return (
@@ -52,8 +57,8 @@ export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
         status === "active" || table.order?.life_time
           ? "bg-red-500"
           : status === "emergency"
-          ? "bg-amber-500"
-          : "bg-green-500"
+            ? "bg-amber-500"
+            : "bg-green-500"
       }
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
