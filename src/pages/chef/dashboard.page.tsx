@@ -33,14 +33,17 @@ export default function DashboardPage() {
     else setMqttHost(`${result.data.protocol}://${result.data.host}:${result.data.port}`);
   }
 
-  const { payload } = useMqttClient(mqttHost);
+  const { client, payload } = useMqttClient(mqttHost);
 
   React.useEffect(() => {
-    if (payload?.topic === "orders") {
-      const orders = JSON.parse(payload?.message);
-      setOrderItems(orders);
+    if (payload?.topic == "refresh") {
+      const refresh = payload.message == "true";
+      if (refresh) {
+        fetchOrderItems();
+        client?.publish("refresh", "false");
+      }
     }
-  }, [payload]);
+  }, [payload, client]);
 
   React.useEffect(() => {
     fetchOrderItems();
@@ -52,7 +55,11 @@ export default function DashboardPage() {
   return (
     <div className="container grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {orderItems.map(item => (
-        <ChefCards.OrderCard key={item.id} orderItem={item} nextAction={fetchOrderItems} />
+        <ChefCards.OrderCard
+          key={item.id}
+          orderItem={item}
+          nextAction={fetchOrderItems}
+        />
       ))}
     </div>
   );

@@ -22,6 +22,7 @@ export function useMqttClient(host: string | null, mqttOption?: mqtt.IClientOpti
   React.useEffect(() => {
     if (client) {
       client.subscribe("orders");
+      client.subscribe("refresh");
       client.on("connect", () => {
         setStatus("connected");
       });

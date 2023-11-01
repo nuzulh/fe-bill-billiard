@@ -50,7 +50,8 @@ export default function OrderCard({ orderItem, nextAction }: OrderCardProps) {
         <p className="text-xs">
           Dipesan oleh: <strong>{orderItem.order?.costumer_name ?? "-"}</strong>
           <br />
-          Dipesan pada: <strong>{formatTime(orderItem.order?.created_at!) ?? "-"}</strong>
+          Dipesan pada:{" "}
+          <strong>{formatTime(orderItem.order?.created_at as Date) ?? "-"}</strong>
         </p>
       </CardContent>
     </Card>
