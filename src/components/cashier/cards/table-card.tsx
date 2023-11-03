@@ -57,8 +57,8 @@ export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
         status === "active" || table.order?.life_time
           ? "bg-red-500"
           : status === "emergency"
-            ? "bg-amber-500"
-            : "bg-green-500"
+          ? "bg-amber-500"
+          : "bg-green-500"
       }
     >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -73,7 +73,7 @@ export default function TableCard({ table, fnbs, nextAction }: TableCardProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-primary text-primary-foreground">
-            {status === "active" || table.order?.life_time ? (
+            {status !== "inactive" || table.order?.life_time ? (
               <>
                 <CashierDialogs.EditFnbOrderDialog
                   table={table}
