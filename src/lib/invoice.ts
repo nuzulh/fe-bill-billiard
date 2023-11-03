@@ -1,8 +1,8 @@
 import { Order } from "@/types";
+import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import { formatCurrency, formatDuration, formatTime } from ".";
 import logo from "../assets/images/logo.png";
-import { toPng } from "html-to-image";
 
 function getPageHeight(order: Order) {
   const baseHeight = 68;
@@ -21,12 +21,19 @@ function createInvoicePdf(order: Order) {
 
   let posY = 20;
   const textVerticalSpacing = 5;
-  const nextLine = (n?: number) => n ? posY += n : posY += textVerticalSpacing;
+  const nextLine = (n?: number) => (n ? (posY += n) : (posY += textVerticalSpacing));
   const fontSizes = { xs: 7, s: 8, m: 9, l: 10 };
 
-  doc.addImage(logo, "PNG", width / 2 - logoWidth / 2, textVerticalSpacing, logoWidth, logoHeight);
+  doc.addImage(
+    logo,
+    "PNG",
+    width / 2 - logoWidth / 2,
+    textVerticalSpacing,
+    logoWidth,
+    logoHeight,
+  );
 
-  doc.setFont("courier");
+  doc.setFont("courier", "bold");
   doc.setFontSize(fontSizes.s);
   doc.text(
     formatTime(order.created_at),
@@ -81,7 +88,7 @@ function createInvoicePdf(order: Order) {
   doc.text(formatCurrency(order.price), width - 5, posY, { align: "right" });
 
   nextLine(textVerticalSpacing + 3);
-  doc.setFont("courier", "normal");
+  doc.setFont("courier", "bold");
   doc.setFontSize(fontSizes.xs);
   doc.text("Terima kasih telah berkunjung :)", 5, posY);
 
@@ -108,11 +115,10 @@ export function onPrintElement(elementId: string) {
 
 export function onPrintPng(filename: string) {
   const el = document.getElementById("order-print-area") as HTMLElement;
-  toPng(el)
-    .then((url) => {
-      const link = document.createElement("a");
-      link.download = filename;
-      link.href = url;
-      link.click();
-    });
+  toPng(el).then(url => {
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = url;
+    link.click();
+  });
 }
