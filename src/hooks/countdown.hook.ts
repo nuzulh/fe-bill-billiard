@@ -17,7 +17,7 @@ function getReturnValues(countDown: number) {
         : "active";
 
   return { days, hours, minutes, seconds, status };
-};
+}
 
 export function useCountdown(
   targetDate: string | number | Date,
@@ -43,4 +43,4 @@ export function useCountdown(
   }, [countDownDate]);
 
   return getReturnValues(countDown);
-};
+}
